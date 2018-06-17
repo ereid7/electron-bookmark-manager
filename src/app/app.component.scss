@@ -1,0 +1,132 @@
+.sidenav {
+  margin-left: -18px;
+
+  width: 7vw;
+}
+
+.windowsHeader {
+  width: 100%;
+  height: 26px;
+  -webkit-app-region: drag;
+  overflow: hidden;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    z-index: 999;
+}
+
+.headerIcon  {
+  -webkit-app-region: no-drag;
+  display: inline-block;
+margin-bottom: 0px;
+margin-top: 1px;
+margin-right: 12px;
+margin-left: 12px;
+position: fixed;
+top: 0;
+right: 0;
+fill: #8d8d8d;
+color: white;
+}
+
+.darkHeaderIcon {
+  -webkit-app-region: no-drag;
+  display: inline-block;
+margin-bottom: 0px;
+margin-top: 1px;
+margin-right: 12px;
+margin-left: 12px;
+position: fixed;
+top: 0;
+right: 0;
+fill: #5f5f5f;
+color: white;
+}
+
+.headerSettingsIcon {
+  -webkit-app-region: no-drag;
+  display: inline-block;
+margin-bottom: 0px;
+margin-top: 3px;
+margin-right: 12px;
+margin-left: 8px;
+position: fixed;
+top: 0;
+left: 0;
+fill: #8d8d8d;
+color: white;
+} 
+
+.headerSettingsToggle {
+  -webkit-app-region: no-drag;
+  display: inline-block;
+margin-bottom: 1px;
+margin-top: 1px;
+margin-right: 12px;
+margin-left: 8px;
+position: fixed;
+top: 0;
+left: 20px;
+opacity: .5;
+color: aqua;
+border-color: aqua;
+flood-color: aqua;
+outline-color: aqua;
+lighting-color: aqua;
+stop-color: aqua;
+text-decoration-color: aqua;
+}
+
+.darkHeaderSettingsIcon {
+  -webkit-app-region: no-drag;
+  display: inline-block;
+margin-bottom: 0px;
+margin-top: 3px;
+margin-right: 12px;
+margin-left: 8px;
+position: fixed;
+top: 0;
+left: 0;
+fill: #5f5f5f;
+color: white;
+} 
+
+.headerIcon:hover {
+  fill: #7a8bcd;
+}
+
+.headerSettingsIcon:hover {
+  fill: #7a8bcd;
+}
+
+.content-area {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  background-color: #CED3D7;
+}
+
+.darkMode {
+  background-color: #262627;
+  border-color: #262627;
+}
+
+.darkModeBackGround {
+  background-color: #1E1E1E;
+}
+
+.darkModeText {
+  color: white;
+  text-decoration-color: white;
+  // flood-color: aqua;
+  // background-color: aqua;
+  // lighting-color: aqua;
+}
+
+::-webkit-scrollbar {
+  display: none;
+  }
+
+.main-container {
+  padding-top: 25px;
+}

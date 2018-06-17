@@ -1,0 +1,36 @@
+.darkGridHeader {
+    background-color: #1e2a2e;
+    color: #adbbc4;
+    text-decoration-color: #262627;
+    border-style: none;
+    border-color: #2e383f;
+    border-block-end-color: #2e383f;
+    border-block-start-color: #2e383f;
+    border-inline-end-color: #2e383f;
+    border-inline-start-color: #2e383f;
+    outline-color: #2e383f;
+  }
+  
+  .darkGrid {
+    border-style: none;
+    background-color: #262626;
+    color: #adbbc4;
+    text-decoration-color: #262627;
+    border-color: #2e383f;
+    border-block-end-color: #2e383f;
+    border-block-start-color: #2e383f;
+    border-inline-end-color: #2e383f;
+    border-inline-start-color: #2e383f;
+    outline-color: #2e383f;
+  }
+
+  .editButton {
+    margin-bottom: -3px;
+  }
+
+  .tablefield {
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis ;
+  }

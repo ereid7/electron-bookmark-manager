@@ -1,0 +1,156 @@
+<button [ngClass]="getClass()" style="width: 135px;" class="btn btn-primary" *ngFor="let site of (this.buttonService.getButtons() | filter: this.tabService.getCurrentTab())"
+    [value]="site" [style.background-color]="site.color" (click)="buttonClick(site)">{{site.name}}</button>
+<button *ngIf="this.tabService.editMode" style="width: 135px; border-style: dashed; border-color: cornflowerblue;border-width: 2px;"
+    class="btn btn-outline" (click)="this.openModal('addbutton')">
+    <p style="font-size: 25pt; margin-top: 3px;">+</p>
+</button>
+
+<section style="margin-left: -13px; margin-bottom: 8px; position:absolute; bottom:0;">
+    <button class="btn btn-icon btn-link" style="border: none; margin: 0px; font-size: 18px" (click)="this.tabService.openNav()">
+        <strong *ngIf="this.tabService.expanded" [ngStyle]="{'color': this.settingsService?.getTextColor('none')}">
+            <</strong>
+                <strong *ngIf="!this.tabService.expanded"  [ngStyle]="{'color': this.settingsService?.getTextColor('none')}">></strong>
+    </button>
+</section>
+
+<!-- Add button modal -->
+<clr-modal [(clrModalOpen)]="this.modal" [clrModalSize]="'lg'" [clrModalClosable]="false">
+    <h3 class="modal-title" style="text-align: center">Add Button</h3>
+    <div class="modal-body">
+        <form class="form" [formGroup]="buttonForm" (ngSubmit)="onSubmit()">
+            <section class="form-block">
+                <div class="form-group">
+                    <label for="empname">Name</label>
+                    <label for="empname" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonForm.get('name').invalid
+                            && (buttonForm.get('name').dirty || buttonForm.get('name').touched)">
+                        <input id="name" type="text" formControlName="name" size="30">
+                        <span class="tooltip-content">
+                            Name is required.
+                        </span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="empurl">URL</label>
+                    <label for="empurl" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonForm.get('url').invalid
+                            && (buttonForm.get('url').dirty || buttonForm.get('url').touched)">
+                        <input id="url" type="text" formControlName="url" size="30">
+                        <span class="tooltip-content">
+                            URL is required.
+                        </span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="empcolor">Color</label>
+                    <label for="empcolor" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonForm.get('color').invalid
+                            && (buttonForm.get('color').dirty || buttonForm.get('color').touched)">
+                        <input id="color" type="text" [(colorPicker)]="color" formControlName="color" (colorPickerChange)="buttonForm.get('color').setValue($event)"
+                            size="30" />
+                        <span class="tooltip-content">
+                            Color is required.
+                        </span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="empshortcut">Keyboard Shortcut</label>
+                    <label for="empshortcut" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonForm.get('shortcut').invalid
+                            && (buttonForm.get('shortcut').dirty || buttonForm.get('shortcut').touched)">
+                        <input id="url" type="text" formControlName="shortcut" size="30">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="empname">Category</label>
+                    <label for="empname" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonForm.get('category').invalid
+                                && (buttonForm.get('category').dirty || buttonForm.get('category').touched)">
+                        <div>
+                            <select style="width: 254px;" formControlName="category">
+                                <option [selected]="this.tabService.currentTab === 'All'">All</option>
+                                <option *ngFor="let tab of this.tabService.tabList">{{tab.name}}</option>
+                            </select>
+                        </div>
+                        <span class="tooltip-content">
+                            Category is required.
+                        </span>
+                    </label>
+                </div>
+            </section>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="this.closeModal('addbutton')">Cancel</button>
+        <button class="btn btn-primary" [disabled]="buttonForm.invalid" (click)="this.onSubmit()">Add</button>
+    </div>
+</clr-modal>
+
+<!-- Edit button modal -->
+<clr-modal [(clrModalOpen)]="this.buttonService.editmodal" [clrModalSize]="'lg'" [clrModalClosable]="false">
+    <h3 class="modal-title" style="text-align: center">Edit Button</h3>
+    <div class="modal-body">
+        <form class="form" [formGroup]="buttonUpdateForm" (ngSubmit)="onUpdate()">
+            <section class="form-block">
+                <div class="form-group">
+                    <label for="empname">Name</label>
+                    <label for="empname" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('name').invalid
+                            && (buttonUpdateForm.get('name').dirty || buttonUpdateForm.get('name').touched)">
+                        <input id="name" type="text" size="30" formControlName="name" (colorPickerChange)="buttonForm.get('color').setValue($event)">
+                        <span class="tooltip-content">
+                            Name is required.
+                        </span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="empurl">URL</label>
+                    <label for="empurl" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('url').invalid
+                            && (buttonUpdateForm.get('url').dirty || buttonUpdateForm.get('url').touched)">
+                        <input id="url" type="text" size="30" formControlName="url">
+                        <span class="tooltip-content">
+                            URL is required.
+                        </span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="empcolor">Color</label>
+                    <label for="empcolor" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('color').invalid
+                            && (buttonUpdateForm.get('color').dirty || buttonUpdateForm.get('color').touched)">
+                        <input id="color" type="text" size="30" [(colorPicker)]="color" formControlName="color" (colorPickerChange)="buttonUpdateForm.get('color').setValue($event)"
+                        />
+                        <span class="tooltip-content">
+                            Color is required.
+                        </span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="empshortcut">Keyboard Shortcut</label>
+                    <label for="empshortcut" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('shortcut').invalid
+                            && (buttonUpdateForm.get('shortcut').dirty || buttonUpdateForm.get('shortcut').touched)">
+                        <input id="url" type="text" formControlName="shortcut" size="30">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="empname">Category</label>
+                    <label for="empname" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('category').invalid
+                                    && (buttonUpdateForm.get('category').dirty || buttonUpdateForm.get('category').touched)">
+                        <div>
+                            <select style="width: 254px;" formControlName="category">
+                                <option>All</option>
+                                <option *ngFor="let tab of this.tabService.tabList" [selected]="isSelected(tab.name)">{{tab.name}}</option>
+                            </select>
+                        </div>
+                        <!-- <input id="name" type="text" formControlName="category" size="30"> -->
+                        <span class="tooltip-content">
+                            Category is required.
+                        </span>
+                    </label>
+                </div>
+                <!-- <div class="modal-footer">
+                <button class="btn btn-primary"
+                    type="submit"
+                    [disabled]="buttonUpdateForm.invalid">Add</button></div> -->
+            </section>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="this.closeModal('editbutton')">Cancel</button>
+        <button type="button" style="background-color: #f8435f; float: left;" class="btn btn-outline" (click)="this.onDelete()">Delete</button>
+        <button class="btn btn-primary" [disabled]="buttonUpdateForm.invalid" (click)="this.onUpdate()">Save Changes</button>
+    </div>
+</clr-modal>

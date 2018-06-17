@@ -1,0 +1,129 @@
+<div class="main-container">
+    <!-- <header class="header header-6">
+        
+    </header> -->
+
+    <div class="content-container">
+        <div class="content-area" [ngClass]="this.settingsService?.getBackGroundTheme()">
+            <div class="body">
+                <!-- <button style="width: 135px;" class="btn btn-primary" *ngFor="let site of (this.buttonService.getButtons() | filter: this.currentTab)" [value]="site" [style.background-color]="site.color"
+                    (click)="send()">{{site.name}}</button> -->
+                <!-- <app-home [guy]="currentTab"></app-home> -->
+
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+        <!-- TODO add side toggle -->
+        <nav class="sidenav" *ngIf="this.tabService.expanded" [ngClass]="this.settingsService?.getTheme()">
+            <section class="sidenav-content">
+                <a [ngClass]="isActive('All')" (click)="changeTab('All')" class="nav-link" [routerLink]="['/home']" [ngStyle]="{'color': this.settingsService?.getTextColor('All')}">
+                    All
+                </a>
+                <a *ngFor="let tab of this.tabService.tabList;" [ngClass]="isActive(tab.name)" (click)="changeTab(tab.name)" class="nav-link"
+                    [routerLink]="['/home']" [ngStyle]="{'color': this.settingsService?.getTextColor(tab.name)}">
+                    <span class="badge badge-danger" *ngIf="this.tabService.editMode" style="color: white" (click)="this.openDeleteModal()">X</span>
+                    {{tab.name}}
+                </a>
+                <a *ngIf="this.tabService.editMode" class="nav-link" style="border: darkslategrey; border-style:solid; border-width: 1px;"
+                    (click)="this.openModal()">
+                    <p style="font-size: 25pt; margin-top: 3px;">+</p>
+                </a>
+                <hr>
+                <section style="margin-left: 30px; margin-bottom: 8px; position:absolute; bottom:0;">
+                    <label for="formGroupExampleInput" [ngStyle]="{'color': this.settingsService?.getTextColor('All')}">Edit</label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="toggle_5" [checked]="this.tabService.editMode" (change)="this.tabService.editMode = !this.tabService.editMode">
+                        <label for="toggle_5"></label>
+                    </div>
+
+                    <!-- <clr-icon (click)="openSettingsModal()" shape="cog"></clr-icon> -->
+                    <label (click)="openSettingsModal()">Settings</label>
+                </section>
+            </section>
+        </nav>
+    </div>
+</div>
+
+
+<clr-modal [(clrModalOpen)]="this.modal" [clrModalSize]="'lg'" style="margin-bottom: -40px">
+    <h3 class="modal-title"style="text-align: center">Add Tab</h3>
+    <div class="modal-body">
+        <form class="form" [formGroup]="tabForm" (ngSubmit)="onSubmit()">
+            <section class="form-block">
+                <!-- <label>Add Employee Address</label> -->
+                <div class="form-group">
+                    <label for="empname">Name</label>
+                    <label for="empname" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="tabForm.get('name').invalid
+                            && (tabForm.get('name').dirty || tabForm.get('name').touched)">
+                        <input id="name" type="text" style="width: 40vw;" formControlName="name">
+                        <span class="tooltip-content">
+                            Name is required.
+                        </span>
+                    </label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" (click)="this.modal = false">Cancel</button>
+                    <button class="btn btn-primary" type="submit" [disabled]="tabForm.invalid" (click)="this.modal = false" (click)="this.onSubmit()">Add</button>
+                </div>
+                <!-- <div class="modal-footer">
+                <button class="btn btn-primary"
+                    type="submit"
+                    [disabled]="tabForm.invalid">Add</button></div> -->
+            </section>
+        </form>
+    </div>
+    <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="this.modal = false">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="this.modal = false">Ok</button>
+    </div> -->
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="this.deletemodal" [clrModalSize]="'lg'" style="margin-bottom: -40px">
+    <h3 class="modal-title" style="text-align: center">Delete Tab</h3>
+    <div class="modal-body" style="text-align: center">
+        <p>Are you sure you want to delete this tab?</p>
+        <p>All buttons in this category will remain under the 'All' tab.</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="this.deletemodal = false">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="this.deleteTab()">Delete</button>
+    </div>
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="this.settingsModal" [clrModalSize]="'lg'">
+    <h3 class="modal-title" style="text-align: center">Settings</h3>
+    <div class="modal-body" style="text-align: center">
+        <form class="form" [formGroup]="settingsForm" (ngSubmit)="this.openSettingsModal()">
+            <section class="form-block">
+                <div class="form-group">
+                    <label for="emptheme">Theme</label>
+                    <div>
+                        <select style="width: 254px;" formControlName="theme">
+                            <option>Light</option>
+                            <option>Dark</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="empbuttonSize">Button Size</label>
+                    <label for="empbuttonSize" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm">
+                        <div>
+                            <select style="width: 254px;" formControlName="buttonSize">
+                                <option>Small</option>
+                                <option>Normal</option>
+                            </select>
+                        </div>
+                    </label>
+                </div>
+                <!-- <div class="modal-footer">
+                <button class="btn btn-primary"
+                    type="submit"
+                    [disabled]="settingsForm.invalid">Add</button></div> -->
+            </section>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="this.settingsModal = false">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="onSubmitSettings()">Save</button>
+    </div>
+</clr-modal>
