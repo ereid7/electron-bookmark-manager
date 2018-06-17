@@ -13,6 +13,7 @@ import { ClarityModule } from '@clr/angular';
 import { SettingsService } from './shared/settings.service';
 import { WindowsService } from './shared/windows.service';
 import { HotkeyComponent } from './hotkey/hotkey.component';
+import { SharedService } from './shared/shared.service';
 
 declare var ipcRenderer: any;
 
@@ -51,7 +52,8 @@ export class AppComponent implements OnInit {
   //settingsIcon: string = __dirname.slice(0, -5) + '\\src\\assets\\storage\\images\\settings.png'
 
   constructor(public tabService: TabService, public buttonService: ButtonService,
-    private router: Router, private fb: FormBuilder, public settingsService: SettingsService) {
+    private router: Router, private fb: FormBuilder, public settingsService: SettingsService,
+    private sharedService: SharedService) {
     // this.settingsService.getJSON().subscribe(data => this.settings = data);
     // this.tabList = ipcRenderer.on('get-data', function(event, argument) {
 

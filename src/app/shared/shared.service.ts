@@ -5,6 +5,8 @@ export class SharedService {
 
   constructor() { }
 
+  isTableMode: boolean = false;
+
   sleep(milliseconds) {
     var start = new Date().getTime();
     for (var i = 0; i < 1e7; i++) {
@@ -13,5 +15,7 @@ export class SharedService {
       }
     }
   }
+
+
 
 }

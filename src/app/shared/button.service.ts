@@ -52,20 +52,20 @@ export class ButtonService {
         this.refresh();
     }
 
-    update(button: any) {
+    update(button: any, view: number) {
         ipcRenderer.send('update-data', button);
 
         this.sleep(200);
 
-        this.refresh();
+        view === 0 ? this.refresh() : this.refreshTableView();
     }
 
-    delete(button: any) {
+    delete(button: any, view: number) {
         ipcRenderer.send('delete-data', button);
 
         this.sleep(200);
 
-        this.refresh();
+        view === 0 ? this.refresh() : this.refreshTableView();
     }
 
     //TODO put in shared method service because tab service uses
@@ -76,6 +76,15 @@ export class ButtonService {
                 this.buttonList = data;
             });
         this.router.navigate(['/home']);
+    }
+
+    refreshTableView() {
+        this.http.get(__dirname.slice(0, -5) + '/src/assets/storage/buttons.json')
+            .subscribe(data => {
+                console.log(data)
+                this.buttonList = data;
+            });
+        this.router.navigate(['/hotkey']);
     }
 
     getButtons() {

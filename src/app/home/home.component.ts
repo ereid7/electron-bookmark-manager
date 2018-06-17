@@ -26,6 +26,11 @@ declare let open: any;
 })
 export class HomeComponent implements OnInit, OnChanges {
 
+    // TODO put everything from hotkey.component into here
+    // TODO put edit hotkeys in lower left
+    // add style to buttons
+    // TODO add option to change border color on each button
+
     // TODO implement modal in home component
 
     // TODO STYLING
@@ -165,7 +170,7 @@ export class HomeComponent implements OnInit, OnChanges {
 
         this.buttonUpdateForm.reset();
 
-        this.buttonService.update(updatedButton);
+        this.buttonService.update(updatedButton, 0);
     }
 
     onSubmit() {
@@ -195,7 +200,7 @@ export class HomeComponent implements OnInit, OnChanges {
 
         this.buttonUpdateForm.reset();
 
-        this.buttonService.delete(this.selectedButton)
+        this.buttonService.delete(this.selectedButton, 0)
     }
 
     public send() {
@@ -233,6 +238,17 @@ export class HomeComponent implements OnInit, OnChanges {
     // TODO add to service
     openLink(url: string) {
         open(url, "chrome");
+    }
+
+    // Hotkey Table Functions 
+
+    // TODO put in shared service
+    truncate(url: string) {
+        return url.length > 20 ? url.substring(0, 20) + '...' : url
+    }
+
+    openEditModal() {
+        this.buttonService.editmodal = !this.buttonService.editmodal;
     }
 
 }

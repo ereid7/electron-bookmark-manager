@@ -1,5 +1,6 @@
 .sidenav {
   margin-left: -18px;
+  margin-right: -50px;
 
   width: 7vw;
 }
@@ -14,6 +15,14 @@
     z-index: 999;
 }
 
+.windowsFooter {
+  width: 166px;
+  height: 26px;
+  overflow: hidden;
+  position:absolute; /* Set the navbar to fixed position */
+    bottom: 0; /* Position the navbar at the top of the page */
+}
+
 .headerIcon  {
   -webkit-app-region: no-drag;
   display: inline-block;
@@ -26,6 +35,35 @@ top: 0;
 right: 0;
 fill: #8d8d8d;
 color: white;
+}
+
+.hotkeyLink:hover {
+  color: #7a8bcd;
+}
+
+.hotkeyLinkDark:hover {
+  color: #7a8bcd;
+}
+
+.hotkeyLinkDark {
+  color: #adbbc4;
+  margin-left: 47px; 
+  margin-top: 18px;
+  margin-bottom: -5px;
+  font-family: metropolis;
+}
+
+.hotkeyLink {
+  color: #454545;
+  margin-left: 47px; 
+  margin-top: 18px; 
+  margin-bottom: -5px;
+  font-family: metropolis;
+}
+
+.link {
+  width: 166px;
+  margin-right: -50px;
 }
 
 .darkHeaderIcon {

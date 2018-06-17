@@ -12,12 +12,58 @@
                 <!-- <button class="btn btn-icon btn-link">
                     Edit
                 </button> -->
-                <svg (click)="openEditModal()" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 22 22" class="editButton">
+                <svg (click)="buttonClick(site)" xmlns="http://www.w3.org/2000/svg" [ngClass]="this.settingsService.getGridIconTheme()" width="16" height="16" viewBox="0 0 22 22">
                     <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
                     <path d="M0 0h24v24H0z" fill="none"/>
                 </svg>
         </clr-dg-cell>
     </clr-dg-row>
 
-    <clr-dg-footer [ngClass]="this.settingsService.getGridHeaderTheme()" >{{mockData.length}} shortcuts</clr-dg-footer>
+    <clr-dg-footer [ngClass]="this.settingsService.getGridHeaderTheme()" >{{sites.length}} shortcuts</clr-dg-footer>
 </clr-datagrid>
+
+<!-- Edit button modal -->
+<clr-modal [(clrModalOpen)]="this.buttonService.editmodal" [clrModalSize]="'lg'" [clrModalClosable]="false">
+    <h3 class="modal-title" style="text-align: center">Edit Button</h3>
+    <div class="modal-body">
+        <form class="form" [formGroup]="buttonUpdateForm" (ngSubmit)="onUpdate()">
+            <section class="form-block">
+                <div class="form-group">
+                    <label for="empname">Name</label>
+                    <label for="empname" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('name').invalid
+                            && (buttonUpdateForm.get('name').dirty || buttonUpdateForm.get('name').touched)">
+                        <input id="name" type="text" size="30" formControlName="name" (colorPickerChange)="buttonUpdateForm.get('color').setValue($event)">
+                        <span class="tooltip-content">
+                            Name is required.
+                        </span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="empurl">URL</label>
+                    <label for="empurl" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('url').invalid
+                            && (buttonUpdateForm.get('url').dirty || buttonUpdateForm.get('url').touched)">
+                        <input id="url" type="text" size="30" formControlName="url">
+                        <span class="tooltip-content">
+                            URL is required.
+                        </span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="empshortcut">Keyboard Shortcut</label>
+                    <label for="empshortcut" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('shortcut').invalid
+                            && (buttonUpdateForm.get('shortcut').dirty || buttonUpdateForm.get('shortcut').touched)">
+                        <input id="url" type="text" formControlName="shortcut" size="30">
+                    </label>
+                </div>
+                <!-- <div class="modal-footer">
+                <button class="btn btn-primary"
+                    type="submit"
+                    [disabled]="buttonUpdateForm.invalid">Add</button></div> -->
+            </section>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline" (click)="this.closeModal('editbutton')">Cancel</button>
+        <button class="btn btn-primary" [disabled]="buttonUpdateForm.invalid" (click)="this.onUpdate()">Save Changes</button>
+    </div>
+</clr-modal>

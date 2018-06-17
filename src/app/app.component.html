@@ -46,14 +46,13 @@
                 <!-- <button style="width: 135px;" class="btn btn-primary" *ngFor="let site of (this.buttonService.getButtons() | filter: this.currentTab)" [value]="site" [style.background-color]="site.color"
                     (click)="send()">{{site.name}}</button> -->
                 <!-- <app-home [guy]="currentTab"></app-home> -->
-
                 <router-outlet></router-outlet>
             </div>
         </div>
         <!-- TODO add side toggle -->
         <nav class="sidenav" *ngIf="this.tabService.expanded" [ngClass]="this.settingsService?.getTheme()">
-            <section class="sidenav-content">
-                <a [ngClass]="isActive('All')" (click)="changeTab('All')" class="nav-link" [routerLink]="['/home']" [ngStyle]="{'color': this.settingsService?.getTextColor('All')}">
+            <section class="sidenav-content" style="width: 166px; margin-right: -50px;">
+                <a [ngClass]="isActive('All')" (click)="changeTab('All')" class="nav-link" style="width: 166px; margin-right: -50px;" [routerLink]="['/home']" [ngStyle]="{'color': this.settingsService?.getTextColor('All')}">
                     All
                 </a>
                 <a *ngFor="let tab of this.tabService.tabList;" [ngClass]="isActive(tab.name)" (click)="changeTab(tab.name)" class="nav-link"
@@ -66,7 +65,7 @@
                     <p style="font-size: 25pt; margin-top: 3px;">+</p>
                 </a>
                 <!-- <hr> -->
-                <!-- <a *ngIf="this.tabService.editMode" [ngClass]="'active'" class="nav-link" style="margin-bottom: 65px; position: absolute; width:185px; bottom: 0;"
+                <!-- <a *ngIf="this.tabService.editMode" [ngClass]="'active'" class="nav-link" style="margin-bottom: 65px; position: absolute; width:185; bottom: 0;"
                     (click)="this.editHotkeys()">
                     Edit Hotkeys
                 </a> -->
@@ -86,6 +85,9 @@
                         </svg>
                     </button>
                 </section> -->
+                <div class="windowsFooter" *ngIf="this.tabService.editMode" [ngStyle]="{'background-color': this.settingsService?.getHeaderTheme()}">
+                    <a [ngClass]="this.settingsService.getEditHotkeyClass()" [routerLink]="['/hotkey']">Edit Hotkeys</a>
+                </div>
             </section>
         </nav>
     </div>

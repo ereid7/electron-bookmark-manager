@@ -96,6 +96,10 @@ export class SettingsService implements OnInit {
         return this.settings.theme === 'Dark' ? 'darkGridHeader' : '';
     }
 
+    getGridIconTheme() {
+        return this.settings.theme === 'Dark' ? 'darkGridIcon' : 'editButton';
+    }
+
     getGridTheme() {
         return this.settings.theme === 'Dark' ? 'darkGrid' : '';
     }
@@ -111,11 +115,18 @@ export class SettingsService implements OnInit {
     }
 
     getTextTheme() {
-
         if (this.settings.theme === 'Dark') {
             return 'darkModeText';
         } else {
             return '';
+        }
+    }
+
+    getEditHotkeyClass() {
+        if (this.settings.theme === 'Dark') {
+            return 'hotkeyLinkDark';
+        } else {
+            return 'hotkeyLink';
         }
     }
 
@@ -125,7 +136,7 @@ export class SettingsService implements OnInit {
             if (tabName === this.tabService.currentTab) {
                 return ''
             }
-            return '#d5d5d5';
+            return '#adbbc4';
         } else {
             ''
         }

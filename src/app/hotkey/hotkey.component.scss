@@ -1,5 +1,5 @@
 .darkGridHeader {
-    background-color: #1e2a2e;
+    background-color: #333639;
     color: #adbbc4;
     text-decoration-color: #262627;
     border-style: none;
@@ -24,8 +24,30 @@
     outline-color: #2e383f;
   }
 
+  .darkGridIcon {
+    fill: #adbbc4;
+    margin-bottom: -4px;
+  }
+
+  // .gridIcon {
+  //   fill: #4a4a4a;
+  // }
+
+  // .gridIcon:hover {
+  //   fill: #7a8bcd;
+  // }
+
   .editButton {
-    margin-bottom: -3px;
+    fill: #606060;
+    margin-bottom: -2px;
+  }
+
+  .darkGridIcon:hover {
+    fill: #7a8bcd;
+  }
+
+  .editButton:hover {
+    fill: #7a8bcd;
   }
 
   .tablefield {

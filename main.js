@@ -1,3 +1,5 @@
+'use strict';
+
 const { app, BrowserWindow, ipcMain, IpcMessageEvent, ipcRenderer, globalShortcut } = require('electron');
 
 const path = require('path');
