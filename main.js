@@ -6,6 +6,26 @@ const path = require('path');
 
 var open = require("open");
 
+// normalize shortcuts for each os
+const normalize = require("electron-shortcut-normalizer")
+
+normalize('Ctrl+A')
+// => 'CommandOrControl+A'
+
+normalize('CommandOrControl+Z', process.platform)
+// => 'Command+Z' on Mac OS X
+// => 'Control+Z' on Windows and Linux
+
+normalize('CmdOrCtrl+a', 'darwin')
+// => 'Command+A'
+
+normalize('CmdOrCtrl+a', 'win32')
+// => 'Control+A'
+
+// `Option` is unique to Mac OS X, so it's normalized to `Alt`:
+normalize('Option+Up')
+// => 'Alt+Up'
+
 // const fs = require('fs');
 
 // let Router = require('electron-router');
@@ -61,19 +81,36 @@ ipcMain.on('add-data', function (event, argument) {
 
     var oldFile = [];
 
+    oldFile = JSON.parse(data);
+
+    oldFile.push(argument);
+
     if (err) {
       throw err;
     }
 
     if (argument.shortcut) {
-      globalShortcut.register(argument.shortcut, () => {
-        open(argument.url, "chrome");
-      });
+
+      globalShortcut.unregister(argument.shortcut);
+
+      var urlList = []
+      urlList.push(argument.url);
+
+      for (let j = 0; j < oldFile.length; j++) {
+        if (oldFile[j].shortcut === argument.shortcut &&
+          oldFile[j].url !== argument.url) {
+          urlList.push(oldFile[j].url)
+        }
+      }
+
+      if (argument.shortcut) {
+        globalShortcut.register(argument.shortcut, () => {
+          for (let k = 0; k < urlList.length; k++) {
+            open(urlList[k], "chrome");
+          }
+        });
+      }
     }
-
-    oldFile = JSON.parse(data);
-
-    oldFile.push(argument);
 
     oldFile = JSON.stringify(oldFile);
 
@@ -160,10 +197,6 @@ ipcMain.on('delete-data', function (event, argument) {
   var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/buttons.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
   // var filepath = path.join(__dirname, '/src/assets/storage/tabs.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
 
-  if (argument.shortcut) {
-    globalShortcut.unregister(argument.shortcut);
-  }
-
   fs.readFile(filepath, function read(err, data) {
 
     var oldFile = [];
@@ -177,6 +210,26 @@ ipcMain.on('delete-data', function (event, argument) {
     oldFile = oldFile.filter(button => {
       return argument.id === button.id ? false : true;
     });
+
+    if (argument.shortcut) {
+      // todo create shared method
+      var urlList = []
+      for (let j = 0; j < oldFile.length; j++) {
+        if (oldFile[j].shortcut === argument.shortcut &&
+          oldFile[j].url !== argument.url) {
+          urlList.push(oldFile[j].url)
+        }
+      }
+
+      if (argument.shortcut) {
+        globalShortcut.register(argument.shortcut, () => {
+          for (let k = 0; k < urlList.length; k++) {
+            open(urlList[k], "chrome");
+          }
+        });
+      }
+
+    }
 
     oldFile = JSON.stringify(oldFile);
 
@@ -335,10 +388,18 @@ app.on('ready', function () {
 
     oldFile = JSON.parse(data);
 
+    // TODO add logic to open same diff urls with same command
+
     for (let i = 0; i < oldFile.length; i++) {
       if (oldFile[i].shortcut) {
         globalShortcut.register(oldFile[i].shortcut, () => {
           open(oldFile[i].url, "chrome");
+          for (let j = 0; j < oldFile.length; j++) {
+            if (oldFile[j].shortcut === oldFile[i].shortcut &&
+              oldFile[j].url !== oldFile[i].url) {
+              open(oldFile[j].url, "chrome");
+            }
+          }
         });
       }
     }
@@ -359,13 +420,17 @@ app.on('activate', function () {
   if (win === null) {
     createWindow()
   }
-});  
+});
 
 // WINDOWS WINDOW FUNCTIONS
 ipcMain.on('hide', function () {
-  win.hide();
+  win.close();
 });
 
 ipcMain.on('minimize', function () {
   win.minimize();
+});
+
+ipcMain.on('maximize', function () {
+  win.isMaximized() ? win.unmaximize() : win.maximize();
 });

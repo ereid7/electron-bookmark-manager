@@ -50,6 +50,8 @@ export class SettingsService implements OnInit {
         //         console.log(data)
         //         this.settings = data;
         //     });
+        this.getJSON().subscribe(
+            data => this.settings = data);
     }
 
     mockSettings = {
@@ -104,6 +106,11 @@ export class SettingsService implements OnInit {
         return this.settings.theme === 'Dark' ? 'darkGrid' : '';
     }
 
+    getAddButtonClass() {
+        if (this.settings.buttonSize = 'Small') {
+            return 'btn btn-outline addbutton btn-sm';
+        } else { return 'btn btn-outline addbutton'; }
+    }
 
     getBackGroundTheme() {
 
@@ -182,5 +189,9 @@ export class SettingsService implements OnInit {
 
     minimize() {
         ipcRenderer.send('minimize');
+    }
+
+    maximize() {
+        ipcRenderer.send('maximize');
     }
 }

@@ -21,7 +21,7 @@
         <path d="M0 0h24v24H0z" fill="none" />
     </svg>
 
-    <svg (click)="this.settingsService.hide()" class="headerIcon" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"
+    <svg (click)="this.settingsService.maximize()" class="headerIcon" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"
         viewBox="0 0 20 20" style="width: 20px; height: 20px; color: white; right: 32" [ngClass]="this.settingsService.getHeaderIconTheme()">
         <!-- TODO change to ngclass so hover will work -->
         <path d="M0 0h24v24H0z" fill="none" />
@@ -60,7 +60,7 @@
                     <span class="badge badge-danger" *ngIf="this.tabService.editMode" style="color: white" (click)="this.openDeleteModal()">X</span>
                     {{tab.name}}
                 </a>
-                <a *ngIf="this.tabService.editMode" class="nav-link" style="border: darkslategrey; border-style:solid; border-width: 1px;"
+                <a *ngIf="this.tabService.editMode" class="nav-link" style="border: #454545; border-style:solid; border-width: 1px;"
                     (click)="this.openModal()">
                     <p style="font-size: 25pt; margin-top: 3px;">+</p>
                 </a>
@@ -86,7 +86,7 @@
                     </button>
                 </section> -->
                 <div class="windowsFooter" *ngIf="this.tabService.editMode" [ngStyle]="{'background-color': this.settingsService?.getHeaderTheme()}">
-                    <a [ngClass]="this.settingsService.getEditHotkeyClass()" [routerLink]="['/hotkey']">Edit Hotkeys</a>
+                    <a [ngClass]="this.settingsService.getEditHotkeyClass()" [routerLink]="['/hotkey']">Edit Shortcut</a>
                 </div>
             </section>
         </nav>

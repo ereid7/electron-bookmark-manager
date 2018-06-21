@@ -15,6 +15,12 @@
   background-color: #262627;
 }
 
+.addbutton {
+  width: 130px; 
+  border-style: dashed; 
+  border-color: #7a8bcd;;
+  border-width: 2px;
+}
 
 // TODO make text bigger and make button smaller
 
@@ -26,7 +32,7 @@
 
 .edit {
   border-style: dashed;
-  border-color: cornflowerblue;
+  border-color: #7a8bcd;;
   border-width: 2px;
   opacity: 0.7;
 }

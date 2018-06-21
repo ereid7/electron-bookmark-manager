@@ -26,16 +26,14 @@ declare let open: any;
 })
 export class HomeComponent implements OnInit, OnChanges {
 
-    // TODO put everything from hotkey.component into here
-    // TODO put edit hotkeys in lower left
+    // https://stackoverflow.com/questions/22678933/run-a-windows-batch-file-from-node-js
+    // look into muuris
+
     // add style to buttons
     // TODO add option to change border color on each button
 
-    // TODO implement modal in home component
-
     // TODO STYLING
-    // Style buttons in table with theme
-    // place edit hotkey tab elsewhere
+
     // normalize colors
     // add more options for margin space
 
@@ -44,9 +42,9 @@ export class HomeComponent implements OnInit, OnChanges {
 
     // TODO normalize button positon in modals
     // TODO add edit mode help text
-    // TODO create settings service
+
     // TODO change all to Home
-    // TODO dissallow the same keyboard shortcuts
+
     // TODO fix input line spacing from word
     // TODO create models for objects
 
@@ -74,23 +72,17 @@ export class HomeComponent implements OnInit, OnChanges {
     }
 
     constructor(public buttonService: ButtonService, public tabService: TabService, private router: Router, private fb: FormBuilder, public settingsService: SettingsService) {
-        // ipcRenderer.on('tab-data', function (event, argument) {
-        //     console.log(argument);
-        // });
-
         this.tab = tabService.currentTab;
         this.sites = this.buttonService.getButtons();
     }
 
     ngOnInit() {
-        // this.settingsService.getJSON().subscribe(
-        //     data => this.settings = data);
         this.settingsService.changeSettings();
         this.sites = this.buttonService.getButtons();
         this.tab = this.tabService.currentTab;
 
         this.buttonForm = this.fb.group({
-            name: ['', Validators.required],
+            name: ['', Validators.required, Validators.maxLength(15)],
             url: ['', Validators.required],
             color: ['', Validators.required],
             shortcut: [''],
