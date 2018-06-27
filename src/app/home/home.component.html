@@ -14,24 +14,21 @@
             <section class="form-block">
                 <div class="form-group">
                     <label for="empname">Name</label>
-                    <label for="empname" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonForm.get('name').invalid
+                    <label for="empname" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonForm.get('name').invalid
                             && (buttonForm.get('name').dirty || buttonForm.get('name').touched)">
                         <input id="name" type="text" formControlName="name" size="30">
-                        <span class="tooltip-content">
-                            Name is required.
-                        </span>
                     </label>
                 </div>
                 <div class="form-group">
                     <label for="empurl">URL</label>
-                    <label for="empurl" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonForm.get('url').invalid
+                    <label for="empurl" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonForm.get('url').invalid
                             && (buttonForm.get('url').dirty || buttonForm.get('url').touched)">
                         <input id="url" type="text" formControlName="url" size="30">
                     </label>
                 </div>
                 <div class="form-group">
                     <label for="empcolor">Color</label>
-                    <label for="empcolor" style="overflow: visible" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm"
+                    <label for="empcolor" style="overflow: visible" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm"
                         [class.invalid]="buttonForm.get('color').invalid
                             && (buttonForm.get('color').dirty || buttonForm.get('color').touched)">
                         <input id="color" style="overflow: visible" type="text" [(colorPicker)]="color" formControlName="color" (colorPickerChange)="buttonForm.get('color').setValue($event)"
@@ -47,14 +44,14 @@
                         </svg>
 
                     </label>
-                    <label for="empshortcut" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonForm.get('shortcut').invalid
+                    <label for="empshortcut" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonForm.get('shortcut').invalid
                             && (buttonForm.get('shortcut').dirty || buttonForm.get('shortcut').touched)">
                         <input id="url" type="text" formControlName="shortcut" size="30">
                     </label>
                 </div>
                 <div class="form-group">
                     <label for="empname">Category</label>
-                    <label for="empname" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonForm.get('category').invalid
+                    <label for="empname" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonForm.get('category').invalid
                                 && (buttonForm.get('category').dirty || buttonForm.get('category').touched)">
                         <div>
                             <select style="width: 254px;" formControlName="category">
@@ -81,33 +78,24 @@
             <section class="form-block">
                 <div class="form-group">
                     <label for="empname">Name</label>
-                    <label for="empname" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('name').invalid
+                    <label for="empname" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('name').invalid
                             && (buttonUpdateForm.get('name').dirty || buttonUpdateForm.get('name').touched)">
                         <input id="name" type="text" size="30" formControlName="name" (colorPickerChange)="buttonForm.get('color').setValue($event)">
-                        <span class="tooltip-content">
-                            Name is required.
-                        </span>
                     </label>
                 </div>
                 <div class="form-group">
                     <label for="empurl">URL</label>
-                    <label for="empurl" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('url').invalid
+                    <label for="empurl" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('url').invalid
                             && (buttonUpdateForm.get('url').dirty || buttonUpdateForm.get('url').touched)">
                         <input id="url" type="text" size="30" formControlName="url">
-                        <span class="tooltip-content">
-                            URL is required.
-                        </span>
                     </label>
                 </div>
                 <div class="form-group">
                     <label for="empcolor">Color</label>
-                    <label for="empcolor" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('color').invalid
+                    <label for="empcolor" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('color').invalid
                             && (buttonUpdateForm.get('color').dirty || buttonUpdateForm.get('color').touched)">
                         <input id="color" type="text" size="30" [(colorPicker)]="color" formControlName="color" (colorPickerChange)="buttonUpdateForm.get('color').setValue($event)"
                         />
-                        <span class="tooltip-content">
-                            Color is required.
-                        </span>
                     </label>
                 </div>
                 <div class="form-group">
@@ -118,14 +106,14 @@
                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
                         </svg>
                     </label>
-                    <label for="empshortcut" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('shortcut').invalid
+                    <label for="empshortcut" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('shortcut').invalid
                             && (buttonUpdateForm.get('shortcut').dirty || buttonUpdateForm.get('shortcut').touched)">
                         <input id="url" type="text" formControlName="shortcut" size="30">
                     </label>
                 </div>
                 <div class="form-group">
                     <label for="empname">Category</label>
-                    <label for="empname" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('category').invalid
+                    <label for="empname" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('category').invalid
                                     && (buttonUpdateForm.get('category').dirty || buttonUpdateForm.get('category').touched)">
                         <div>
                             <select style="width: 254px;" formControlName="category">
@@ -134,9 +122,6 @@
                             </select>
                         </div>
                         <!-- <input id="name" type="text" formControlName="category" size="30"> -->
-                        <span class="tooltip-content">
-                            Category is required.
-                        </span>
                     </label>
                 </div>
                 <!-- <div class="modal-footer">
