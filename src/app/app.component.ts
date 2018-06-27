@@ -54,24 +54,10 @@ export class AppComponent implements OnInit {
   constructor(public tabService: TabService, public buttonService: ButtonService,
     private router: Router, private fb: FormBuilder, public settingsService: SettingsService,
     private sharedService: SharedService) {
-    // this.settingsService.getJSON().subscribe(data => this.settings = data);
-    // this.tabList = ipcRenderer.on('get-data', function(event, argument) {
-
-    //   for (let x of argument) {
-    //     console.log(x.name);
-    //     tabService.pushList(x.name);
-    //   }
-    //   return argument;
-    // });
-    // ipcRenderer.send('tab-data', 'poop');
-    // this.tabList = this.tabService.getTabs();
-    // this.tabService.send();
-    // console.log(this.tabService.tabList);
-    // console.log(this.tabList);
   }
 
-  currentTab = 'Home';
-
+  currentTab = this.tabService.currentTab; // TODO remove?
+ 
   pushList(item: any) {
     this.tabList.push(item);
   }
@@ -81,8 +67,8 @@ export class AppComponent implements OnInit {
 
     this.tabService.delete();
 
-    this.tabService.changeTab('Home'); // TODO change once have all category
-    this.currentTab = 'Home';
+    this.tabService.changeTab('All'); // TODO change once have all category
+    this.currentTab = 'All';
   }
 
   changeTab(tab) {
@@ -102,7 +88,7 @@ export class AppComponent implements OnInit {
   }
 
   isActive(tab: string) {
-    if (this.currentTab === tab) {
+    if (this.tabService.currentTab === tab) {
       return 'active';
     } else {
       return '';
@@ -135,8 +121,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.settingsService.getJSON().subscribe(
-    //   data => this.settings = data);
     this.settingsService.changeSettings();
     this.tabForm = this.fb.group({
       name: ['', Validators.required]
@@ -174,47 +158,4 @@ export class AppComponent implements OnInit {
     this.tabService.currentTab = newTab.name;
     this.currentTab = newTab.name;
   }
-
-
-  // openNewTab(url: string) {
-  //   window.open(url, '_system', 'location=yes');
-  // }
-
-  // max     = 1;
-  // current = 0;
-
-  // start() {
-  //   const interval = Observable.interval(100);
-
-  //   interval
-  //     .takeWhile(_ => !this.isFinished )
-  //     .do(i => this.current += 0.1)
-  //     .subscribe();
-  // }
-
-  //  /// finish timer
-  // finish() {
-  //   this.current = this.max;
-  // }
-
-  // /// reset timer
-  // reset() {
-  //   this.current = 0;
-  // }
-
-
-  // /// Getters to prevent NaN errors
-
-  // get maxVal() {
-  //   return isNaN(this.max) || this.max < 0.1 ? 0.1 : this.max;
-  // }
-
-  // get currentVal() {
-  //   return isNaN(this.current) || this.current < 0 ? 0 : this.current;
-  // }
-
-  // get isFinished() {
-  //   return this.currentVal >= this.maxVal;
-  // }
-
 }

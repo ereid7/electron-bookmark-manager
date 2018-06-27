@@ -173,14 +173,6 @@ export class SettingsService implements OnInit {
         }
     }
 
-    // getIconColor() {
-    //     if (this.settings.theme === 'Dark') {
-    //         return '#5f5f5f';
-    //     } else {
-    //         return '';
-    //     }
-    // }
-
     // Windows Functions
 
     hide() {

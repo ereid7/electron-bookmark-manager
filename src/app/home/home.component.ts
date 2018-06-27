@@ -1,5 +1,5 @@
 
-import { Component, OnInit, OnChanges, NgZone, Output, Input, HostListener, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, NgZone, Output, Input, HostListener, EventEmitter, HostBinding } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonService } from '../shared/button.service';
 import { TabService } from '../shared/tab.service';
@@ -27,26 +27,15 @@ declare let open: any;
 export class HomeComponent implements OnInit, OnChanges {
 
     // https://stackoverflow.com/questions/22678933/run-a-windows-batch-file-from-node-js
-    // look into muuris
 
-    // add style to buttons
     // TODO add option to change border color on each button
-
-    // TODO STYLING
-
-    // normalize colors
     // add more options for margin space
-
     // TODO add browser in settings
-    // add shortcut toggle when adding task
 
-    // TODO normalize button positon in modals
+    // TODO Allow for multiple shortcuts per link
     // TODO add edit mode help text
 
-    // TODO change all to Home
-
-    // TODO fix input line spacing from word
-    // TODO create models for objects
+    @HostBinding('class') classes = 'homeClass'; // todo remove
 
     @Input() guy: string = "Home"
 
@@ -82,7 +71,7 @@ export class HomeComponent implements OnInit, OnChanges {
         this.tab = this.tabService.currentTab;
 
         this.buttonForm = this.fb.group({
-            name: ['', Validators.required, Validators.maxLength(15)],
+            name: ['', [Validators.required, Validators.maxLength(15)]],
             url: ['', Validators.required],
             color: ['', Validators.required],
             shortcut: [''],
@@ -107,7 +96,7 @@ export class HomeComponent implements OnInit, OnChanges {
         if (modaltype === 'addbutton') {
             if (this.tabService.currentTab !== 'All') {
                 this.buttonForm.patchValue({
-                    category: this.tabService.currentTab
+                    category: 'All'
                 });
             }
             this.modal = !this.modal;
@@ -244,146 +233,4 @@ export class HomeComponent implements OnInit, OnChanges {
     }
 
 }
-
-
-
-// buttonGuys = [
-//     {
-//         name: 'GitHub',
-//         url: 'https://github.com/',
-//         color: '#24292E',
-//         category: 'dev'
-//     },
-//     {
-//         name: 'Scotch.io',
-//         url: 'https://scotch.io/',
-//         color: '#C7A242',
-//         category: 'dev'
-//     },
-//     {
-//         name: 'Alligator.io',
-//         url: 'https://alligator.io/',
-//         color: '#33A369',
-//         category: 'dev'
-//     },
-//     {
-//         name: 'Hackernoon',
-//         url: 'https://hackernoon.com/',
-//         color: '#00FF00',
-//         category: 'dev'
-//     }, {
-//         name: 'Stack OvFlw',
-//         url: 'https://stackoverflow.com/',
-//         color: '#F48024',
-//         category: 'dev'
-//     },
-//     {
-//         name: 'Pluralsight',
-//         url: 'https://app.pluralsight.com/library/',
-//         color: '#https://stackoverflow.com/',
-//         category: 'dev'
-//     },
-//     {
-//         name: 'Heroku',
-//         url: 'https://www.heroku.com/',
-//         color: '#79589F',
-//         category: 'dev'
-//     },
-//     {
-//         name: 'Robinhood',
-//         url: 'https://www.robinhood.com/',
-//         color: '#21CE99',
-//         category: 'finance'
-//     },
-//     {
-//         name: 'Mint',
-//         url: 'https://mint.intuit.com/',
-//         color: '#0CADB5',
-//         category: 'finance'
-//     },
-//     {
-//         name: 'TCF Bank',
-//         url: 'https://tcfbank.com/',
-//         color: '#FAAC18',
-//         category: 'finance'
-//     },
-//     {
-//         name: 'Gmail',
-//         url: 'https://mail.google.com/mail',
-//         color: '#https://mail.google.com/mail',
-//         category: 'home'
-//     },
-//     {
-//         name: 'Keep',
-//         url: 'https://keep.google.com/',
-//         color: '#FFBB00',
-//         category: 'home'
-//     },
-//     {
-//         name: 'Calendar',
-//         url: 'https://calendar.google.com/calendar/',
-//         color: '#E67C73',
-//         category: 'home'
-//     },
-//     {
-//         name: 'LinkedIn',
-//         url: 'https://www.linkedin.com/',
-//         color: '0077B5',
-//         category: 'home'
-//     },
-//     {
-//         name: 'Reddit',
-//         url: 'https://www.reddit.com/',
-//         color: '#FF4500',
-//         category: 'home'
-//     },
-//     {
-//         name: 'Soundcloud',
-//         url: 'https://www.soundcloud.com/',
-//         color: '#FF5500',
-//         category: 'home'
-//     },
-//     {
-//         name: 'Youtube',
-//         url: 'https://www.youtube.com/',
-//         color: '#FF0000',
-//         category: 'home'
-//     },
-//     {
-//         name: 'Reuters',
-//         url: 'https://www.reuters.com/',
-//         color: '#EF7A04',
-//         category: 'home'
-//     },
-//     {
-//         name: 'D2L',
-//         url: 'https://uwstout.courses.wisconsin.edu/d2l/home',
-//         color: '#004283',
-//         category: 'school'
-//     },
-//     {
-//         name: 'Outlook',
-//         url: 'https://login.microsoftonline.com/common/oauth2/authorize?client_id=00000002-0000-0ff1-ce00-000000000000&redirect_uri=https%3a%2f%2foutlook.office365.com%2fowa%2f&resource=00000002-0000-0ff1-ce00-000000000000&response_mode=form_post&response_type=code+id_token&scope=openid&msafed=0&client-request-id=f555c433-d47a-4f96-9e27-7a4274703ac0&protectedtoken=true&domain_hint=my.uwstout.edu&nonce=636614237307464534.4fdb4ff1-52a3-44b9-a534-973a1ec19046&state=DYtBDoMgEABBf9KDNxDcdQkH41vWAomJxMRKTX_fPcwcJhmtlOqFTtBOpAIBkccJAriAhDOgxZI2LMWbeWIwiFs0LN3EAOzz20eHpOV9jefD43plPupSf7Y9n_tst82pDd-0VN6PPw&sso_reload=true',
-//         color: '#007DC2',
-//         category: 'school'
-//     },
-//     {
-//         name: 'Access',
-//         url: 'https://access.uwstout.edu/psp/ps/EMPLOYEE/HRMS/h/?tab=DEFAULT',
-//         color: '#004283',
-//         category: 'school'
-//     },
-//     {
-//         name: 'Career Link',
-//         url: 'https://www.uwstout.edu/academics/career-services/careerlink',
-//         color: '#004990',
-//         category: 'school'
-//     },
-//     {
-//         name: 'Logins',
-//         url: 'http://logins.uwstout.edu/links.aspx',
-//         color: '#004283',
-//         category: 'school'
-//     },
-// ]
 

@@ -26,16 +26,7 @@ normalize('CmdOrCtrl+a', 'win32')
 normalize('Option+Up')
 // => 'Alt+Up'
 
-// const fs = require('fs');
-
-// let Router = require('electron-router');
-// // var server = require('./express');
-// let router = Router('MAIN');
-
 let win;
-
-// var remote = require('remote'); // Load remote compnent that contains the dialog dependency
-// var dialog = remote.require('dialog'); // Load the dialogs component of the OS
 
 function createWindow() {
   // Create the browser window.
@@ -50,8 +41,10 @@ function createWindow() {
 
   win.loadURL(`file://${__dirname}/dist/index.html`)
 
+  win.setResizable(true)
+
   //// uncomment below to open the DevTools.
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 
   // Event when the window is closed.
   win.on('closed', function () {
@@ -66,16 +59,9 @@ ipcMain.on('add-data', function (event, argument) {
 
   console.log(argument);
 
-  //  path.join('app/libs/oauth', '/../ssl')ss
-
   const fs = require('fs');
 
-  // var newButton = JSON.stringify(argument);
-  // // var oldFile = [];
-  // var newFile;
-
   var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/buttons.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
-  // var filepath = path.join(__dirname, '/src/assets/storage/tabs.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
 
   fs.readFile(filepath, function read(err, data) {
 
@@ -133,13 +119,10 @@ ipcMain.on('update-data', function (event, argument) {
 
   console.log(argument);
 
-  //  path.join('app/libs/oauth', '/../ssl')ss
-
   const fs = require('fs');
 
   // TODO make this global
   var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/buttons.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
-  // var filepath = path.join(__dirname, '/src/assets/storage/tabs.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
 
   fs.readFile(filepath, function read(err, data) {
 
@@ -151,17 +134,32 @@ ipcMain.on('update-data', function (event, argument) {
 
     oldFile = JSON.parse(data);
 
-    for (let i = 0; i < oldFile.length; i++) {
-      if (oldFile[i].id === argument.id) {
-        if (argument.shortcut) {
-          if (oldFile[i].shortcut !== argument.shortcut) {
-            globalShortcut.unregister(oldFile[i].shortcut);
-            globalShortcut.register(argument.shortcut, () => {
-              open(argument.url, "chrome");
-            });
+    // TODO fix update, and adding of first button
+
+    if (argument.shortcut) {
+      // todo create shared method
+      globalShortcut.unregister(argument.shortcut);
+      if (globalShortcut.isRegistered(argument.shortcut)) {
+        var urlList = []
+        for (let j = 0; j < oldFile.length; j++) {
+          if (oldFile[j].shortcut === argument.shortcut &&
+            oldFile[j].url !== argument.url &&
+            oldFile[j].id !== artument.id) {
+            urlList.push(oldFile[j].url)
           }
         }
-        oldFile[i] = argument;
+
+        urlList.push(argument.shortcut);
+
+        globalShortcut.register(argument.shortcut, () => {
+          for (let k = 0; k < urlList.length; k++) {
+            open(urlList[k], "chrome");
+          }
+        });
+      } else {
+        globalShortcut.register(argument.shortcut, () => {
+            open(argument.shortcut, "chrome");
+        });
       }
     }
 
@@ -184,18 +182,9 @@ ipcMain.on('delete-data', function (event, argument) {
   //event.sender is of type webContents, more on this later
   //argument is 'myArgument'
 
-  console.log(argument);
-
-  //  path.join('app/libs/oauth', '/../ssl')ss
-
   const fs = require('fs');
 
-  // var newButton = JSON.stringify(argument);
-  // // var oldFile = [];
-  // var newFile;
-
   var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/buttons.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
-  // var filepath = path.join(__dirname, '/src/assets/storage/tabs.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
 
   fs.readFile(filepath, function read(err, data) {
 
@@ -213,22 +202,22 @@ ipcMain.on('delete-data', function (event, argument) {
 
     if (argument.shortcut) {
       // todo create shared method
-      var urlList = []
-      for (let j = 0; j < oldFile.length; j++) {
-        if (oldFile[j].shortcut === argument.shortcut &&
-          oldFile[j].url !== argument.url) {
-          urlList.push(oldFile[j].url)
+      globalShortcut.unregister(argument.shortcut);
+      if (globalShortcut.isRegistered(argument.shortcut)) {
+        var urlList = []
+        for (let j = 0; j < oldFile.length; j++) {
+          if (oldFile[j].shortcut === argument.shortcut &&
+            oldFile[j].url !== argument.url) {
+            urlList.push(oldFile[j].url)
+          }
         }
-      }
 
-      if (argument.shortcut) {
         globalShortcut.register(argument.shortcut, () => {
           for (let k = 0; k < urlList.length; k++) {
             open(urlList[k], "chrome");
           }
         });
       }
-
     }
 
     oldFile = JSON.stringify(oldFile);
@@ -250,16 +239,9 @@ ipcMain.on('tabs-data', function (event, argument) {
 
   console.log(argument);
 
-  //  path.join('app/libs/oauth', '/../ssl')ss
-
   const fs = require('fs');
 
-  // var newButton = JSON.stringify(argument);
-  // // var oldFile = [];
-  // var newFile;
-
   var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/tabs.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
-  // var filepath = path.join(__dirname, '/src/assets/storage/tabs.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
 
   fs.readFile(filepath, function read(err, data) {
 
@@ -292,16 +274,9 @@ ipcMain.on('tabs-delete', function (event, argument) {
 
   console.log(argument);
 
-  //  path.join('app/libs/oauth', '/../ssl')ss
-
   const fs = require('fs');
 
-  // var newButton = JSON.stringify(argument);
-  // // var oldFile = [];
-  // var newFile;
-
   var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/tabs.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
-  // var filepath = path.join(__dirname, '/src/assets/storage/tabs.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
 
   fs.readFile(filepath, function read(err, data) {
 
@@ -338,13 +313,10 @@ ipcMain.on('update-settings', function (event, argument) {
 
   console.log(argument);
 
-  //  path.join('app/libs/oauth', '/../ssl')ss
-
   const fs = require('fs');
 
   // TODO make this global
   var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/settings.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
-  // var filepath = path.join(__dirname, '/src/assets/storage/tabs.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
 
   fs.readFile(filepath, function read(err, data) {
 

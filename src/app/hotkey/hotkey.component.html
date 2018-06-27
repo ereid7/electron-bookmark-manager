@@ -1,4 +1,4 @@
-<clr-datagrid [ngClass]="this.settingsService.getGridHeaderTheme()" style="width: auto; align-self: center; margin-top: -50px; margin-left: -23px; margin-right: -23px;">
+<clr-datagrid [ngClass]="this.settingsService.getGridHeaderTheme()" style="width: auto; align-self: center; margin-top: -12px; margin-left: -24px; margin-right: -24px;">
     <clr-dg-column [ngClass]="this.settingsService.getGridHeaderTheme()"><span style="color: #adbbc4;">Name</span></clr-dg-column>
     <clr-dg-column [ngClass]="this.settingsService.getGridHeaderTheme()"><span style="color: #adbbc4;">Shortcut</span></clr-dg-column>
     <clr-dg-column [ngClass]="this.settingsService.getGridHeaderTheme()"><span style="color: #adbbc4;">URL</span></clr-dg-column>
@@ -8,7 +8,7 @@
         <clr-dg-cell [ngClass]="this.settingsService.getGridTheme()">{{site.name}}</clr-dg-cell>
         <clr-dg-cell [ngClass]="this.settingsService.getGridTheme()" >{{site.shortcut}}</clr-dg-cell>
         <clr-dg-cell [ngClass]="this.settingsService.getGridTheme()">{{truncate(site.url)}}</clr-dg-cell>
-        <clr-dg-cell [ngClass]="this.settingsService.getGridTheme()" >
+        <clr-dg-cell [ngClass]="this.settingsService.getGridTheme()">
                 <!-- <button class="btn btn-icon btn-link">
                     Edit
                 </button> -->
@@ -33,9 +33,6 @@
                     <label for="empname" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('name').invalid
                             && (buttonUpdateForm.get('name').dirty || buttonUpdateForm.get('name').touched)">
                         <input id="name" type="text" size="30" formControlName="name" (colorPickerChange)="buttonUpdateForm.get('color').setValue($event)">
-                        <span class="tooltip-content">
-                            Name is required.
-                        </span>
                     </label>
                 </div>
                 <div class="form-group">
@@ -43,13 +40,15 @@
                     <label for="empurl" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('url').invalid
                             && (buttonUpdateForm.get('url').dirty || buttonUpdateForm.get('url').touched)">
                         <input id="url" type="text" size="30" formControlName="url">
-                        <span class="tooltip-content">
-                            URL is required.
-                        </span>
                     </label>
                 </div>
                 <div class="form-group">
-                    <label for="empshortcut">Keyboard Shortcut</label>
+                    <label for="empshortcut">Keyboard Shortcut
+                        <svg xmlns="http://www.w3.org/2000/svg" class="helpLink" width="20" height="20" viewBox="0 0 24 24" style="margin: -5px; margin-left: 8px;" (click)="this.buttonService.openHelpLink()">
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                        </svg>
+                    </label>
                     <label for="empshortcut" aria-haspopup="true" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('shortcut').invalid
                             && (buttonUpdateForm.get('shortcut').dirty || buttonUpdateForm.get('shortcut').touched)">
                         <input id="url" type="text" formControlName="shortcut" size="30">

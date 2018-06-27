@@ -15,8 +15,21 @@
   background-color: #262627;
 }
 
+.helpLink:hover {
+  fill: #7a8bcd;
+}
+
+// todo remove these two
+:host(.homeClass) {
+  margin-top: -300px;
+}
+
+.homeClass {
+  margin-top: -300px;
+}
+
 .addbutton {
-  width: 130px; 
+  width: 134px; 
   border-style: dashed; 
   border-color: #7a8bcd;;
   border-width: 2px;

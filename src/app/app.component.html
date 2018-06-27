@@ -14,6 +14,14 @@
         <label for="toggle_5"></label>
     </div>
 
+    <svg (click)="this.tabService.openNav()" class="headerSettingsIcon" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"
+        viewBox="0 0 24 24" style="width: 24px; height: 24px; margin-left: 80px; margin-bottom: 1px; margin-top: 1px;" [ngClass]="this.settingsService.getHeaderSettingsIconTheme()">
+        <path *ngIf="this.tabService.expanded" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+
+        <path *ngIf="!this.tabService.expanded" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+        <path d="M0 0h24v24H0z" fill="none"/>
+    </svg>
+
     <svg (click)="this.settingsService.hide()" class="headerIcon" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"
         viewBox="0 0 20 20" style="width: 20px; height: 20px; color: white;" [ngClass]="this.settingsService.getHeaderIconTheme()">
 
@@ -28,21 +36,16 @@
         <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z" />
     </svg>
     <svg (click)="this.settingsService.minimize()" class="headerIcon" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"
-        viewBox="0 0 20 20" style="width: 20px; height: 22px; color: white; right: 64; margin-bottom: 10px; top: -9px;" [ngClass]="this.settingsService.getHeaderIconTheme()">
-        <path d="M6 19h12v2H6z" />
-        <path fill="none" d="M0 0h24v24H0V0z" />
+        viewBox="0 0 20 20" style="width: 20px; height: 20px; color: white; right: 66; " [ngClass]="this.settingsService.getHeaderIconTheme()">
+        <path d="M19 13H5v-2h14v2z"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
     </svg>
 
 </div>
 <div class="main-container">
-    <!-- <header class="header header-6">
-       
-        
-    </header> -->
-
     <div class="content-container">
-        <div class="content-area" [ngClass]="this.settingsService?.getBackGroundTheme()">
-            <div class="body darkGrid">
+        <div class="content-area" [ngClass]="this.settingsService?.getBackGroundTheme()" style="margin-top: -30px;">
+            <div class="body">
                 <!-- <button style="width: 135px;" class="btn btn-primary" *ngFor="let site of (this.buttonService.getButtons() | filter: this.currentTab)" [value]="site" [style.background-color]="site.color"
                     (click)="send()">{{site.name}}</button> -->
                 <!-- <app-home [guy]="currentTab"></app-home> -->
@@ -57,36 +60,15 @@
                 </a>
                 <a *ngFor="let tab of this.tabService.tabList;" [ngClass]="isActive(tab.name)" (click)="changeTab(tab.name)" class="nav-link"
                     [routerLink]="['/home']" [ngStyle]="{'color': this.settingsService?.getTextColor(tab.name)}">
-                    <span class="badge badge-danger" *ngIf="this.tabService.editMode" style="color: white" (click)="this.openDeleteModal()">X</span>
+                    <span class="badge badge-danger" *ngIf="this.tabService.editMode" style="color: white; margin-top: 1px; margin-bottom: 3px;" (click)="this.openDeleteModal()">X</span>
                     {{tab.name}}
                 </a>
                 <a *ngIf="this.tabService.editMode" class="nav-link" style="border: #454545; border-style:solid; border-width: 1px;"
                     (click)="this.openModal()">
                     <p style="font-size: 25pt; margin-top: 3px;">+</p>
                 </a>
-                <!-- <hr> -->
-                <!-- <a *ngIf="this.tabService.editMode" [ngClass]="'active'" class="nav-link" style="margin-bottom: 65px; position: absolute; width:185; bottom: 0;"
-                    (click)="this.editHotkeys()">
-                    Edit Hotkeys
-                </a> -->
-                <!-- <section style="margin-left: 30px; margin-bottom: 8px; position:absolute; bottom:0;">
-                    <label for="formGroupExampleInput" [ngStyle]="{'color': this.settingsService?.getTextColor('All')}">Edit</label>
-                    <div class="toggle-switch">
-                        <input type="checkbox" id="toggle_5" [checked]="this.tabService.editMode" (change)="this.tabService.editMode = !this.tabService.editMode">
-                        <label for="toggle_5"></label>
-                    </div>
-
-    
-                    <button class="btn btn-icon btn-link" style="border: none; margin: 0px; margin-left: 20px; font-size: 18px" (click)="openSettingsModal()">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" style="margin-top: 8px">
-                            <path fill="none" d="M0 0h20v20H0V0z" />
-                            <path fill="#868686" d="M15.95 10.78c.03-.25.05-.51.05-.78s-.02-.53-.06-.78l1.69-1.32c.15-.12.19-.34.1-.51l-1.6-2.77c-.1-.18-.31-.24-.49-.18l-1.99.8c-.42-.32-.86-.58-1.35-.78L12 2.34c-.03-.2-.2-.34-.4-.34H8.4c-.2 0-.36.14-.39.34l-.3 2.12c-.49.2-.94.47-1.35.78l-1.99-.8c-.18-.07-.39 0-.49.18l-1.6 2.77c-.1.18-.06.39.1.51l1.69 1.32c-.04.25-.07.52-.07.78s.02.53.06.78L2.37 12.1c-.15.12-.19.34-.1.51l1.6 2.77c.1.18.31.24.49.18l1.99-.8c.42.32.86.58 1.35.78l.3 2.12c.04.2.2.34.4.34h3.2c.2 0 .37-.14.39-.34l.3-2.12c.49-.2.94-.47 1.35-.78l1.99.8c.18.07.39 0 .49-.18l1.6-2.77c.1-.18.06-.39-.1-.51l-1.67-1.32zM10 13c-1.65 0-3-1.35-3-3s1.35-3 3-3 3 1.35 3 3-1.35 3-3 3z"
-                            />
-                        </svg>
-                    </button>
-                </section> -->
                 <div class="windowsFooter" *ngIf="this.tabService.editMode" [ngStyle]="{'background-color': this.settingsService?.getHeaderTheme()}">
-                    <a [ngClass]="this.settingsService.getEditHotkeyClass()" [routerLink]="['/hotkey']">Edit Shortcut</a>
+                    <a [ngClass]="this.settingsService.getEditHotkeyClass()" [routerLink]="['/hotkey']">Edit Shortcuts</a>
                 </div>
             </section>
         </nav>
