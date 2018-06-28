@@ -35,6 +35,11 @@ export class HomeComponent implements OnInit, OnChanges {
     // TODO Allow for multiple shortcuts per link
     // TODO add edit mode help text
 
+    // TODO FIX ADD BUTTON CATEGORY DEFAULT
+    // ALLOW FOR MULTIPLE CATEGORIES AND SORTING
+
+    // use angular split for custom toolbar size
+
     @HostBinding('class') classes = 'homeClass'; // todo remove
 
     @Input() guy: string = "Home"
@@ -94,11 +99,9 @@ export class HomeComponent implements OnInit, OnChanges {
 
     openModal(modaltype: string) {
         if (modaltype === 'addbutton') {
-            if (this.tabService.currentTab !== 'All') {
-                this.buttonForm.patchValue({
-                    category: 'All'
-                });
-            }
+            this.buttonForm.patchValue({
+                category: this.tabService.currentTab
+            });
             this.modal = !this.modal;
         } else if (modaltype === 'editbutton') {
             this.buttonService.editmodal = !this.buttonService.editmodal;

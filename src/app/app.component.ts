@@ -108,13 +108,9 @@ export class AppComponent implements OnInit {
     });
   }
 
-  // open settings modal
-
-
   openDeleteModal() {
     this.deletemodal = !this.deletemodal;
   }
-
 
   getTabs() {
     return this.tabList;

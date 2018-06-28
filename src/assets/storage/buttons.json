@@ -1,10 +1,1 @@
-[
-    {
-        "category": "All",
-        "color": "#6bc0a6",
-        "id": "537b9238-e059-ce9c-e83b-e67257c1d6e1",
-        "name": "First Tab",
-        "shortcut": null,
-        "url": "testurl.com"
-    }
-]
+[{"category":"All","color":"#6bc0a6","id":"537b9238-e059-ce9c-e83b-e67257c1d6e1","name":"First Tab","shortcut":"ctrl+u","url":"testurl.com"}]

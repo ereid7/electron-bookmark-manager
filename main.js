@@ -112,6 +112,8 @@ ipcMain.on('add-data', function (event, argument) {
   });
 });
 
+// TODO fix this
+
 // update button
 ipcMain.on('update-data', function (event, argument) {
   //event.sender is of type webContents, more on this later
@@ -138,18 +140,18 @@ ipcMain.on('update-data', function (event, argument) {
 
     if (argument.shortcut) {
       // todo create shared method
-      globalShortcut.unregister(argument.shortcut);
       if (globalShortcut.isRegistered(argument.shortcut)) {
+        globalShortcut.unregister(argument.shortcut);
         var urlList = []
         for (let j = 0; j < oldFile.length; j++) {
           if (oldFile[j].shortcut === argument.shortcut &&
             oldFile[j].url !== argument.url &&
-            oldFile[j].id !== artument.id) {
+            oldFile[j].id !== argument.id) {
             urlList.push(oldFile[j].url)
           }
         }
 
-        urlList.push(argument.shortcut);
+        urlList.push(argument.url);
 
         globalShortcut.register(argument.shortcut, () => {
           for (let k = 0; k < urlList.length; k++) {
@@ -158,8 +160,18 @@ ipcMain.on('update-data', function (event, argument) {
         });
       } else {
         globalShortcut.register(argument.shortcut, () => {
-            open(argument.shortcut, "chrome");
+            open(argument.url, "chrome");
         });
+      }
+    }
+
+    for (let button of oldFile) {
+      if (button.id === argument.id) {
+        button.id = argument.id;
+        button.url = argument.url;
+        button.shortcut = argument.shortcut;
+        button.category = argument.category;
+        button.color = argument.color
       }
     }
 
