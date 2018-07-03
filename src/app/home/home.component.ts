@@ -67,12 +67,12 @@ export class HomeComponent implements OnInit, OnChanges {
 
     constructor(public buttonService: ButtonService, public tabService: TabService, private router: Router, private fb: FormBuilder, public settingsService: SettingsService) {
         this.tab = tabService.currentTab;
-        this.sites = this.buttonService.getButtons();
+        this.sites = this.buttonService.getButtons(this.tabService.currentTab);
     }
 
     ngOnInit() {
         this.settingsService.changeSettings();
-        this.sites = this.buttonService.getButtons();
+        this.sites = this.buttonService.getButtons(this.tabService.currentTab);
         this.tab = this.tabService.currentTab;
 
         this.buttonForm = this.fb.group({
@@ -93,7 +93,7 @@ export class HomeComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges() {
-        this.sites = this.buttonService.getButtons();
+        this.sites = this.buttonService.getButtons(this.tabService.currentTab);
         this.tab = this.tabService.currentTab;
     }
 

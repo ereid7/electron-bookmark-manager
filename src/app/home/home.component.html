@@ -1,5 +1,5 @@
 <div style="margin-top: 22px;">
-    <button [ngClass]="getClass()" style="width: 135px;" class="btn btn-primary" *ngFor="let site of (this.buttonService.getButtons() | filter: this.tabService.getCurrentTab())"
+    <button [ngClass]="getClass()" style="width: 135px;" class="btn btn-primary" *ngFor="let site of this.buttonService.getButtons(this.tabService.currentTab)"
         [value]="site" [style.background-color]="site.color" (click)="buttonClick(site)">{{site.name}}</button>
     <button *ngIf="this.tabService.editMode" class="btn btn-outline btn-sm addbutton" (click)="this.openModal('addbutton')">
         <p style="font-size: 25pt; margin-top: -1px;">+</p>

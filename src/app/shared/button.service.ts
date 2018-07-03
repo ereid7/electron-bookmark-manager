@@ -1,7 +1,9 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable, NgZone, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ElectronService } from 'ngx-electron';
 import { Router } from '@angular/router';
+import { IfObservable } from 'rxjs/observable/IfObservable';
+import { Observable } from 'rxjs/Observable';
 // import { IpcRenderer } from 'electron';
 
 declare let open: any;
@@ -16,7 +18,18 @@ declare var __dirname;
 export class ButtonService {
     // private _ipc: IpcRenderer | undefined = void 0;
 
-    buttonList: any;
+    // this.buttonOrder = this.getSortOrder(tab);
+    //         this.sortedList = [];
+    //         for (let button of this.buttonOrder) {
+    //             for (let but of this.buttonList) {
+    //                 if (button === but.id) {
+    //                     this.sortedList.push(but);
+    //                 }
+    //             }
+    //         }
+    //         return this.sortedList;
+
+    buttonList: any = []
 
     editmodal: boolean = false;
 
@@ -25,6 +38,10 @@ export class ButtonService {
         this.refresh();
 
     }
+
+    // ngOnInit() {
+    //     this.refresh();
+    // }
 
     // TODO put this and openlink in seperate service
     guidGenerator() {
@@ -87,8 +104,19 @@ export class ButtonService {
         this.router.navigate(['/hotkey']);
     }
 
-    getButtons() {
-        return this.buttonList;
+    getSortOrder(tab: string) {
+        return []; // TEMP
+    }
+    
+    getButtons(tab: string) {
+        let order = this.getSortOrder(tab)
+
+        if (tab === 'All') {
+            return this.buttonList;
+        } else {
+            return this.buttonList.filter(button => 
+                button.category === tab);
+        }
     }
 
     getHotkeyButtons() {

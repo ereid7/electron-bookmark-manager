@@ -44,7 +44,7 @@ function createWindow() {
   win.setResizable(true)
 
   //// uncomment below to open the DevTools.
-  // win.webContents.openDevTools()
+   win.webContents.openDevTools()
 
   // Event when the window is closed.
   win.on('closed', function () {
