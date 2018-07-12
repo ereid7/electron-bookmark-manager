@@ -35,10 +35,10 @@ export class HomeComponent implements OnInit, OnChanges {
     // TODO Allow for multiple shortcuts per link
     // TODO add edit mode help text
 
-    // TODO FIX ADD BUTTON CATEGORY DEFAULT
+    // TODO allow for sorting / order storage on all tab (use new object?)
     // ALLOW FOR MULTIPLE CATEGORIES AND SORTING
 
-    // use angular split for custom toolbar size
+    // use angular split for custom toolbar size ? possibly
 
     @HostBinding('class') classes = 'homeClass'; // todo remove
 
@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit, OnChanges {
     modal: boolean = false;
     selectedButton: any = null;
 
-    sites: any[];
+    //sites: any[];
     tab: any;
 
     // Default Color for Picker
@@ -67,12 +67,12 @@ export class HomeComponent implements OnInit, OnChanges {
 
     constructor(public buttonService: ButtonService, public tabService: TabService, private router: Router, private fb: FormBuilder, public settingsService: SettingsService) {
         this.tab = tabService.currentTab;
-        this.sites = this.buttonService.getButtons(this.tabService.currentTab);
+        //this.sites = this.buttonService.getButtons(this.tabService.currentTab);
     }
 
     ngOnInit() {
         this.settingsService.changeSettings();
-        this.sites = this.buttonService.getButtons(this.tabService.currentTab);
+       // this.sites = this.buttonService.getButtons(this.tabService.currentTab);
         this.tab = this.tabService.currentTab;
 
         this.buttonForm = this.fb.group({
@@ -93,7 +93,7 @@ export class HomeComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges() {
-        this.sites = this.buttonService.getButtons(this.tabService.currentTab);
+        //this.sites = this.buttonService.getButtons(this.tabService.currentTab);
         this.tab = this.tabService.currentTab;
     }
 
@@ -187,11 +187,12 @@ export class HomeComponent implements OnInit, OnChanges {
         this.buttonService.delete(this.selectedButton, 0)
     }
 
-    public send() {
+    // public send() {
 
-    }
+    // }
 
     buttonClick(site) {
+       // console.log(this.buttonService.getSortOrder(this.tabService.currentTab));
         if (!this.tabService.editMode) {
             this.openLink(site.url);
         } else {

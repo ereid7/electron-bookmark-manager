@@ -1,5 +1,4 @@
 import { Injectable, NgZone, OnChanges } from '@angular/core';
-import { ButtonService } from './button.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -22,12 +21,13 @@ export class TabService {
   expanded = true;
   editMode = false;
 
-  constructor(private buttons: ButtonService, zone: NgZone, private http: HttpClient, private router: Router) {
+  constructor(zone: NgZone, private http: HttpClient, private router: Router) {
 
     this.http.get(__dirname.slice(0, -5) + '/src/assets/storage/tabs.json')
       .subscribe(data => {
-        console.log(data)
+       // console.log(data)
         this.tabList = data;
+        this.tabList = this.tabList.tabs;
       });
   }
 
@@ -86,10 +86,13 @@ export class TabService {
 
     this.http.get(__dirname.slice(0, -5) + '/src/assets/storage/tabs.json')
       .subscribe(data => {
-        console.log(data)
+        //console.log(data)
         this.tabList = data;
+        this.tabList = this.tabList.tabs;
       });
-    this.router.navigate(['/home']);
+    this.changeTab(tab);
+
+    //this.router.navigate(['/home']);
   }
 
   delete() {
@@ -104,8 +107,9 @@ export class TabService {
 
     this.http.get(__dirname.slice(0, -5) + '/src/assets/storage/tabs.json')
       .subscribe(data => {
-        console.log(data)
+        //console.log(data)
         this.tabList = data;
+        this.tabList = this.tabList.tabs;
       });
     this.router.navigate(['/home']);
 

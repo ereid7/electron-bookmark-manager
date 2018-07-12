@@ -45,7 +45,7 @@ export class HotkeyComponent implements OnInit, OnChanges {
     }
 
     openEditModal() {
-        console.log('weiners');
+       // console.log('weiners');
         this.buttonService.editmodal = !this.buttonService.editmodal;
     }
 

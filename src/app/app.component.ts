@@ -75,6 +75,7 @@ export class AppComponent implements OnInit {
     this.tabService.changeTab(tab);
     this.currentTab = tab;
 
+    this.buttonService.refresh();
     // if statement if in options path
     // this.router.navigate(['/home', tab])
   }
@@ -145,13 +146,15 @@ export class AppComponent implements OnInit {
 
   onSubmit() {
     let newTab = {
-      name: this.tabForm.value.name
+      name: this.tabForm.value.name,
+      order: []
     }
 
     this.tabForm.reset();
 
     this.tabService.add(newTab);
-    this.tabService.currentTab = newTab.name;
+    this.changeTab(newTab.name);
+    //this.tabService.currentTab = newTab.name;
     this.currentTab = newTab.name;
   }
 }

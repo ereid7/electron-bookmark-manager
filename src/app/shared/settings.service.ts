@@ -77,7 +77,7 @@ export class SettingsService implements OnInit {
     //             console.log(data)
     //             this.settings = data;
     //         });
-    //     this.router.navigate(['/home']);
+        // this.router.navigate(['/home']);
     // }
 
     // getButtonSize() {

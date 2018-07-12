@@ -5,7 +5,7 @@ const router = express.Router();
 // /* GET api listing. */
 router.get('/', (req, res) => {
   res.send('api works');
-  console.log('api works');
+  //console.log('api works');
 });
 
 // router.post('/post', (req, res) => {
@@ -32,7 +32,7 @@ db.insert(doc, function (err, newDoc) {   // Callback is optional
 });
 
 router.post('/post', (req, res) => {
-  console.log('api works');
+  //console.log('api works');
   obj = db.find({ category: 'home' }, function (err, docs) {
     // docs is an array containing documents Mars, Earth, Jupiter
     // If no document is found, docs is equal to []

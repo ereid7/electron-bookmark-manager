@@ -4,6 +4,8 @@ const { app, BrowserWindow, ipcMain, IpcMessageEvent, ipcRenderer, globalShortcu
 
 const path = require('path');
 
+const fs = require('fs');
+
 var open = require("open");
 
 // normalize shortcuts for each os
@@ -44,7 +46,7 @@ function createWindow() {
   win.setResizable(true)
 
   //// uncomment below to open the DevTools.
-   win.webContents.openDevTools()
+  win.webContents.openDevTools()
 
   // Event when the window is closed.
   win.on('closed', function () {
@@ -59,9 +61,8 @@ ipcMain.on('add-data', function (event, argument) {
 
   console.log(argument);
 
-  const fs = require('fs');
-
   var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/buttons.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
+  var tabFilePath = __dirname.slice(0, -4) + '/app/src/assets/storage/tabs.json';
 
   fs.readFile(filepath, function read(err, data) {
 
@@ -110,26 +111,50 @@ ipcMain.on('add-data', function (event, argument) {
       alert("The file has been succesfully saved");
     });
   });
-});
 
-// TODO fix this
+  fs.readFile(tabFilePath, function read(err, data) {
+    var oldTabFile = [];
+    oldTabFile = JSON.parse(data);
+    if (argument.category === 'All') {
+      oldTabFile.all.push(argument.id);
+    } else {
+      for (let tab of oldTabFile.tabs) {
+        if (tab.name === argument.category) {
+          if (!tab.order) {
+            tab.order = [];
+          }
+          tab.order.push(argument.id);
+          oldTabFile.all.push(argument.id);
+        }
+      }
+    }
+    oldTabFile = JSON.stringify(oldTabFile);
+
+    fs.writeFileSync(tabFilePath, oldTabFile, (err) => {
+      if (err) {
+        console.log("An error ocurred updating the file" + err.message);
+        console.log(err);
+        return;
+      }
+    })
+  });
+});
 
 // update button
 ipcMain.on('update-data', function (event, argument) {
   //event.sender is of type webContents, more on this later
   //argument is 'myArgument'
 
-  console.log(argument);
-
-  const fs = require('fs');
-
   // TODO make this global
   var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/buttons.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
+  var tabFilePath = __dirname.slice(0, -4) + '/app/src/assets/storage/tabs.json';
+
+  var oldTab;
+  var changedCategory = false;
 
   fs.readFile(filepath, function read(err, data) {
 
     var oldFile = [];
-
     if (err) {
       throw err;
     }
@@ -160,13 +185,18 @@ ipcMain.on('update-data', function (event, argument) {
         });
       } else {
         globalShortcut.register(argument.shortcut, () => {
-            open(argument.url, "chrome");
+          open(argument.url, "chrome");
         });
       }
     }
 
     for (let button of oldFile) {
       if (button.id === argument.id) {
+        if (button.category !== argument.category) {
+          oldTab = button.category;
+          changedCategory = true;
+        }
+
         button.id = argument.id;
         button.url = argument.url;
         button.shortcut = argument.shortcut;
@@ -183,9 +213,37 @@ ipcMain.on('update-data', function (event, argument) {
         console.log(err);
         return;
       }
-
       alert("The file has been succesfully saved");
     });
+  });
+
+  fs.readFile(tabFilePath, function read(err, data) {
+    var oldTabFile = [];
+    oldTabFile = JSON.parse(data);
+
+    for (let i = 0; i < oldTabFile.tabs.length; i++) {
+      if (oldTab !== 'All') {
+        if (oldTabFile.tabs[i].name === oldTab) {
+          oldTabFile.tabs[i].order = oldTabFile.tabs[i].order.filter(id => {
+            return argument.id === id ? false : true;
+          });
+        }
+      }
+      if (argument.category !== 'All') {
+        if (oldTabFile.tabs[i].name === argument.category) {
+          oldTabFile.tabs[i].order.push(argument.id);
+        }
+      }
+    }
+    oldTabFile = JSON.stringify(oldTabFile);
+
+    fs.writeFileSync(tabFilePath, oldTabFile, (err) => {
+      if (err) {
+        console.log("An error ocurred updating the file" + err.message);
+        console.log(err);
+        return;
+      }
+    })
   });
 });
 
@@ -194,9 +252,9 @@ ipcMain.on('delete-data', function (event, argument) {
   //event.sender is of type webContents, more on this later
   //argument is 'myArgument'
 
-  const fs = require('fs');
-
   var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/buttons.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
+  var tabFilePath = __dirname.slice(0, -4) + '/app/src/assets/storage/tabs.json';
+
 
   fs.readFile(filepath, function read(err, data) {
 
@@ -244,14 +302,43 @@ ipcMain.on('delete-data', function (event, argument) {
       alert("The file has been succesfully saved");
     });
   });
+
+  fs.readFile(tabFilePath, function read(err, data) {
+    var oldTabFile = [];
+    oldTabFile = JSON.parse(data);
+
+    if (argument.category === 'All') {
+      oldTabFile.all = oldTabFile.all.filter(id => {
+        return argument.id === id ? false : true;
+      });
+    } else {
+      for (let i = 0; i < oldTabFile.tabs.length; i++) {
+        if (oldTabFile.tabs[i].name === argument.category) {
+          oldTabFile.tabs[i].order = oldTabFile.tabs[i].order.filter(id => {
+            return argument.id === id ? false : true;
+          });
+          oldTabFile.all = oldTabFile.all.filter(id => {
+            return argument.id === id ? false : true;
+          });
+        }
+      }
+    }
+    oldTabFile = JSON.stringify(oldTabFile);
+
+    fs.writeFileSync(tabFilePath, oldTabFile, (err) => {
+      if (err) {
+        console.log("An error ocurred updating the file" + err.message);
+        console.log(err);
+        return;
+      }
+    })
+  });
 });
 
 // Add tab
 ipcMain.on('tabs-data', function (event, argument) {
 
   console.log(argument);
-
-  const fs = require('fs');
 
   var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/tabs.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
 
@@ -265,7 +352,7 @@ ipcMain.on('tabs-data', function (event, argument) {
 
     oldFile = JSON.parse(data);
 
-    oldFile.push(argument);
+    oldFile.tabs.push(argument);
 
     oldFile = JSON.stringify(oldFile);
 
@@ -286,8 +373,6 @@ ipcMain.on('tabs-delete', function (event, argument) {
 
   console.log(argument);
 
-  const fs = require('fs');
-
   var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/tabs.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
 
   fs.readFile(filepath, function read(err, data) {
@@ -300,7 +385,7 @@ ipcMain.on('tabs-delete', function (event, argument) {
 
     oldFile = JSON.parse(data);
 
-    oldFile = oldFile.filter(tab => {
+    oldFile.tabs = oldFile.tabs.filter(tab => {
       return argument.name === tab.name ? false : true;
     });
 
@@ -322,10 +407,6 @@ ipcMain.on('tabs-delete', function (event, argument) {
 ipcMain.on('update-settings', function (event, argument) {
   //event.sender is of type webContents, more on this later
   //argument is 'myArgument'
-
-  console.log(argument);
-
-  const fs = require('fs');
 
   // TODO make this global
   var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/settings.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
@@ -361,7 +442,6 @@ app.on('ready', function () {
 
   var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/buttons.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
 
-  const fs = require('fs');
   fs.readFile(filepath, function read(err, data) {
 
     var oldFile = [];
