@@ -34,9 +34,7 @@ export class HomeComponent implements OnInit, OnChanges {
 
     // TODO Allow for multiple shortcuts per link
     // TODO add edit mode help text
-
-    // TODO allow for sorting / order storage on all tab (use new object?)
-    // ALLOW FOR MULTIPLE CATEGORIES AND SORTING
+    // ALLOW FOR MULTIPLE CATEGORIES
 
     // use angular split for custom toolbar size ? possibly
 
@@ -54,6 +52,8 @@ export class HomeComponent implements OnInit, OnChanges {
     modal: boolean = false;
     selectedButton: any = null;
 
+    options;
+
     //sites: any[];
     tab: any;
 
@@ -67,6 +67,11 @@ export class HomeComponent implements OnInit, OnChanges {
 
     constructor(public buttonService: ButtonService, public tabService: TabService, private router: Router, private fb: FormBuilder, public settingsService: SettingsService) {
         this.tab = tabService.currentTab;
+        this.options = {
+            onUpdate: (event: any) => {
+              this.buttonService.changeOrder(this.buttonService.sortedList, this.tabService.currentTab);
+            }
+          };
         //this.sites = this.buttonService.getButtons(this.tabService.currentTab);
     }
 

@@ -1,11 +1,15 @@
-<div style="margin-top: 22px;">
+<div style="margin-top: 22px;" [sortablejs]="this.buttonService.sortedList" [sortablejsOptions]="this.options">
     <button [ngClass]="getClass()" style="width: 135px;" class="btn btn-primary" *ngFor="let site of this.buttonService.sortedList"
         [value]="site" [style.background-color]="site.color" (click)="buttonClick(site)">{{site.name}}</button>
-    <button *ngIf="this.tabService.editMode" class="btn btn-outline btn-sm addbutton" (click)="this.openModal('addbutton')">
+    <!-- <button *ngIf="this.tabService.editMode" class="btn btn-outline btn-sm addbutton" (click)="this.openModal('addbutton')">
         <p style="font-size: 25pt; margin-top: -1px;">+</p>
+    </button> -->
+</div>
+<div style="align-content: center; align-items: center; text-align: center; margin-top: 18px;">
+    <button *ngIf="this.tabService.editMode" class="btn btn-outline btn-sm addbutton" (click)="this.openModal('addbutton')">
+        <p style="font-size: 25pt; margin-top: 0px; margin-bottom: 1px">+</p>
     </button>
 </div>
-
 <!-- Add button modal -->
 <clr-modal [(clrModalOpen)]="this.modal" [clrModalSize]="'lg'" [clrModalClosable]="false">
     <h3 class="modal-title" style="text-align: center">Add Button</h3>
@@ -61,12 +65,12 @@
                         </div>
                     </label>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" (click)="this.closeModal('addbutton')">Cancel</button>
+                    <button class="btn btn-primary" [disabled]="buttonForm.invalid" (click)="this.onSubmit()">Add</button>
+                </div>
             </section>
         </form>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline" (click)="this.closeModal('addbutton')">Cancel</button>
-        <button class="btn btn-primary" [disabled]="buttonForm.invalid" (click)="this.onSubmit()">Add</button>
     </div>
 </clr-modal>
 
@@ -124,16 +128,13 @@
                         <!-- <input id="name" type="text" formControlName="category" size="30"> -->
                     </label>
                 </div>
-                <!-- <div class="modal-footer">
-                <button class="btn btn-primary"
-                    type="submit"
-                    [disabled]="buttonUpdateForm.invalid">Add</button></div> -->
+
+                    <div class="modal-footer">
+                            <button type="button" class="btn btn-outline" (click)="this.closeModal('editbutton')">Cancel</button>
+                            <button type="button" style="background-color: #f8435f; float: left;" class="btn btn-outline" (click)="this.onDelete()">Delete</button>
+                            <button class="btn btn-primary" [disabled]="buttonUpdateForm.invalid" (click)="this.onUpdate()">Save Changes</button>
+                        </div>
             </section>
         </form>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline" (click)="this.closeModal('editbutton')">Cancel</button>
-        <button type="button" style="background-color: #f8435f; float: left;" class="btn btn-outline" (click)="this.onDelete()">Delete</button>
-        <button class="btn btn-primary" [disabled]="buttonUpdateForm.invalid" (click)="this.onUpdate()">Save Changes</button>
     </div>
 </clr-modal>

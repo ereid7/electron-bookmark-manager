@@ -149,7 +149,7 @@ export class ButtonService implements OnChanges {
 
         if (tab === 'All') {
             buttons = this.buttonList;
-            if (order.length < 0) {
+            if (order.length > 0) {
                 for (let id of order) {
                     for (let but of buttons) {
                         if (id === but.id) {
@@ -166,7 +166,6 @@ export class ButtonService implements OnChanges {
         } else {
             buttons = this.buttonList.filter(button =>
                 button.category === tab);
-            //console.log(buttons);
             if (order) { // todo create order if not there possibly?
                 if (order.length > 0) {
                     for (let id of order) {
@@ -194,6 +193,21 @@ export class ButtonService implements OnChanges {
                 return true;
             }
         });
+    }
+
+    changeOrder(newList, tab) {
+        newList = newList.map((button) => {
+            return button.id;
+        });
+
+        let order = {
+            newList: newList,
+            tab: tab
+        }
+        ipcRenderer.send('swap', order);
+
+        //this.sortedList = this.getButtons(this.tabService.currentTab);
+        //this.refresh();
     }
 
     openLink(url: string) {

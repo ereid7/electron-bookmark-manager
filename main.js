@@ -30,12 +30,17 @@ normalize('Option+Up')
 
 let win;
 
+var tabFilePath = __dirname.slice(0, -4) + '/app/src/assets/storage/tabs.json';
+var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/buttons.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
+var settingsFilePath = __dirname.slice(0, -4) + '/app/src/assets/storage/settings.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
+
+
 function createWindow() {
   // Create the browser window.
 
   win = new BrowserWindow({
     frame: false,
-    // width: 600,
+    // width: 800,
     // height: 600,
     backgroundColor: '#ffffff',
     icon: `file://${__dirname}/dist/assets/logo.png`
@@ -56,14 +61,6 @@ function createWindow() {
 
 // add button
 ipcMain.on('add-data', function (event, argument) {
-  //event.sender is of type webContents, more on this later
-  //argument is 'myArgument'
-
-  console.log(argument);
-
-  var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/buttons.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
-  var tabFilePath = __dirname.slice(0, -4) + '/app/src/assets/storage/tabs.json';
-
   fs.readFile(filepath, function read(err, data) {
 
     var oldFile = [];
@@ -142,13 +139,6 @@ ipcMain.on('add-data', function (event, argument) {
 
 // update button
 ipcMain.on('update-data', function (event, argument) {
-  //event.sender is of type webContents, more on this later
-  //argument is 'myArgument'
-
-  // TODO make this global
-  var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/buttons.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
-  var tabFilePath = __dirname.slice(0, -4) + '/app/src/assets/storage/tabs.json';
-
   var oldTab;
   var changedCategory = false;
 
@@ -249,13 +239,6 @@ ipcMain.on('update-data', function (event, argument) {
 
 // Delete Button
 ipcMain.on('delete-data', function (event, argument) {
-  //event.sender is of type webContents, more on this later
-  //argument is 'myArgument'
-
-  var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/buttons.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
-  var tabFilePath = __dirname.slice(0, -4) + '/app/src/assets/storage/tabs.json';
-
-
   fs.readFile(filepath, function read(err, data) {
 
     var oldFile = [];
@@ -338,11 +321,7 @@ ipcMain.on('delete-data', function (event, argument) {
 // Add tab
 ipcMain.on('tabs-data', function (event, argument) {
 
-  console.log(argument);
-
-  var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/tabs.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
-
-  fs.readFile(filepath, function read(err, data) {
+  fs.readFile(tabFilePath, function read(err, data) {
 
     var oldFile = [];
 
@@ -356,7 +335,7 @@ ipcMain.on('tabs-data', function (event, argument) {
 
     oldFile = JSON.stringify(oldFile);
 
-    fs.writeFileSync(filepath, oldFile, (err) => {
+    fs.writeFileSync(tabFilePath, oldFile, (err) => {
       if (err) {
         console.log("An error ocurred updating the file" + err.message);
         console.log(err);
@@ -370,12 +349,7 @@ ipcMain.on('tabs-data', function (event, argument) {
 
 // Delete Tab
 ipcMain.on('tabs-delete', function (event, argument) {
-
-  console.log(argument);
-
-  var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/tabs.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
-
-  fs.readFile(filepath, function read(err, data) {
+  fs.readFile(tabFilePath, function read(err, data) {
 
     var oldFile = [];
 
@@ -391,7 +365,7 @@ ipcMain.on('tabs-delete', function (event, argument) {
 
     oldFile = JSON.stringify(oldFile);
 
-    fs.writeFileSync(filepath, oldFile, (err) => {
+    fs.writeFileSync(tabFilePath, oldFile, (err) => {
       if (err) {
         console.log("An error ocurred updating the file" + err.message);
         console.log(err);
@@ -405,13 +379,7 @@ ipcMain.on('tabs-delete', function (event, argument) {
 
 // update settings
 ipcMain.on('update-settings', function (event, argument) {
-  //event.sender is of type webContents, more on this later
-  //argument is 'myArgument'
-
-  // TODO make this global
-  var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/settings.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
-
-  fs.readFile(filepath, function read(err, data) {
+  fs.readFile(settingsFilePath, function read(err, data) {
 
     var oldFile;
 
@@ -424,7 +392,7 @@ ipcMain.on('update-settings', function (event, argument) {
     oldFile.buttonSize = argument.buttonSize;
     oldFile = JSON.stringify(oldFile)
 
-    fs.writeFileSync(filepath, oldFile, (err) => {
+    fs.writeFileSync(settingsFilePath, oldFile, (err) => {
       if (err) {
         console.log("An error ocurred updating the file" + err.message);
         console.log(err);
@@ -439,8 +407,6 @@ ipcMain.on('update-settings', function (event, argument) {
 // Create window on electron intialization
 app.on('ready', function () {
   createWindow();
-
-  var filepath = __dirname.slice(0, -4) + '/app/src/assets/storage/buttons.json';// you need to save the filepath when you open the file to update without use the filechooser dialog againg
 
   fs.readFile(filepath, function read(err, data) {
 
@@ -467,6 +433,42 @@ app.on('ready', function () {
         });
       }
     }
+  });
+});
+
+// Swap Order
+ipcMain.on('swap', function (event, argument) {
+  fs.readFile(tabFilePath, function read(err, data) {
+
+    var oldFile = [];
+
+    if (err) {
+      throw err;
+    }
+
+    oldFile = JSON.parse(data);
+
+    if (argument.tab === 'All') {
+      oldFile.all = argument.newList;
+    } else {
+      for (let tab of oldFile.tabs) {
+        if (tab.name === argument.tab) {
+          tab.order = argument.newList;
+        }
+      }
+    }
+
+    oldFile = JSON.stringify(oldFile);
+
+    fs.writeFileSync(tabFilePath, oldFile, (err) => {
+      if (err) {
+        console.log("An error ocurred updating the file" + err.message);
+        console.log(err);
+        return;
+      }
+
+      alert("The file has been succesfully saved");
+    });
   });
 });
 

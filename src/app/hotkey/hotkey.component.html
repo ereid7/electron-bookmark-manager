@@ -1,25 +1,35 @@
 <clr-datagrid [ngClass]="this.settingsService.getGridHeaderTheme()" style="width: auto; align-self: center; margin-top: -12px; margin-left: -24px; margin-right: -24px;">
-    <clr-dg-column [ngClass]="this.settingsService.getGridHeaderTheme()"><span style="color: #adbbc4;">Name</span></clr-dg-column>
-    <clr-dg-column [ngClass]="this.settingsService.getGridHeaderTheme()"><span style="color: #adbbc4;">Shortcut</span></clr-dg-column>
-    <clr-dg-column [ngClass]="this.settingsService.getGridHeaderTheme()"><span style="color: #adbbc4;">URL</span></clr-dg-column>
-    <clr-dg-column [ngClass]="this.settingsService.getGridHeaderTheme()"><span style="color: #adbbc4;">Actions</span></clr-dg-column>
+    <clr-dg-column [ngClass]="this.settingsService.getGridHeaderTheme()">
+        <span style="color: #adbbc4;">Name</span>
+    </clr-dg-column>
+    <clr-dg-column [ngClass]="this.settingsService.getGridHeaderTheme()">
+        <span style="color: #adbbc4;">Shortcut</span>
+    </clr-dg-column>
+    <clr-dg-column [ngClass]="this.settingsService.getGridHeaderTheme()">
+        <span style="color: #adbbc4;">URL</span>
+    </clr-dg-column>
+    <clr-dg-column [ngClass]="this.settingsService.getGridHeaderTheme()">
+        <span style="color: #adbbc4;">Actions</span>
+    </clr-dg-column>
 
     <clr-dg-row [ngClass]="this.settingsService.getGridTheme()" *ngFor="let site of sites">
         <clr-dg-cell [ngClass]="this.settingsService.getGridTheme()">{{site.name}}</clr-dg-cell>
-        <clr-dg-cell [ngClass]="this.settingsService.getGridTheme()" >{{site.shortcut}}</clr-dg-cell>
+        <clr-dg-cell [ngClass]="this.settingsService.getGridTheme()">{{site.shortcut}}</clr-dg-cell>
         <clr-dg-cell [ngClass]="this.settingsService.getGridTheme()">{{truncate(site.url)}}</clr-dg-cell>
         <clr-dg-cell [ngClass]="this.settingsService.getGridTheme()">
-                <!-- <button class="btn btn-icon btn-link">
+            <!-- <button class="btn btn-icon btn-link">
                     Edit
                 </button> -->
-                <svg (click)="buttonClick(site)" xmlns="http://www.w3.org/2000/svg" [ngClass]="this.settingsService.getGridIconTheme()" width="16" height="16" viewBox="0 0 22 22">
-                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-                    <path d="M0 0h24v24H0z" fill="none"/>
-                </svg>
+            <svg (click)="buttonClick(site)" xmlns="http://www.w3.org/2000/svg" [ngClass]="this.settingsService.getGridIconTheme()" width="16"
+                height="16" viewBox="0 0 22 22">
+                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                />
+                <path d="M0 0h24v24H0z" fill="none" />
+            </svg>
         </clr-dg-cell>
     </clr-dg-row>
 
-    <clr-dg-footer [ngClass]="this.settingsService.getGridHeaderTheme()" >{{sites.length}} shortcuts</clr-dg-footer>
+    <clr-dg-footer [ngClass]="this.settingsService.getGridHeaderTheme()">{{sites.length}} shortcuts</clr-dg-footer>
 </clr-datagrid>
 
 <!-- Edit button modal -->
@@ -44,9 +54,10 @@
                 </div>
                 <div class="form-group">
                     <label for="empshortcut">Keyboard Shortcut
-                        <svg xmlns="http://www.w3.org/2000/svg" class="helpLink" width="20" height="20" viewBox="0 0 24 24" style="margin: -5px; margin-left: 8px;" (click)="this.buttonService.openHelpLink()">
-                            <path d="M0 0h24v24H0z" fill="none"/>
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="helpLink" width="20" height="20" viewBox="0 0 24 24" style="margin: -5px; margin-left: 8px;"
+                            (click)="this.buttonService.openHelpLink()">
+                            <path d="M0 0h24v24H0z" fill="none" />
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
                         </svg>
                     </label>
                     <label for="empshortcut" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('shortcut').invalid
@@ -54,15 +65,11 @@
                         <input id="url" type="text" formControlName="shortcut" size="30">
                     </label>
                 </div>
-                <!-- <div class="modal-footer">
-                <button class="btn btn-primary"
-                    type="submit"
-                    [disabled]="buttonUpdateForm.invalid">Add</button></div> -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" (click)="this.closeModal('editbutton')">Cancel</button>
+                    <button class="btn btn-primary" [disabled]="buttonUpdateForm.invalid" (click)="this.onUpdate()">Save Changes</button>
+                </div>
             </section>
         </form>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline" (click)="this.closeModal('editbutton')">Cancel</button>
-        <button class="btn btn-primary" [disabled]="buttonUpdateForm.invalid" (click)="this.onUpdate()">Save Changes</button>
     </div>
 </clr-modal>

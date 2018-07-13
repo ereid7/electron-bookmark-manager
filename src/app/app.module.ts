@@ -18,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxElectronModule } from 'ngx-electron';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { SortablejsModule } from 'angular-sortablejs';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyComponent } from './hotkey/hotkey.component';
@@ -55,7 +56,8 @@ const appRoutes: Routes = [
     NgxElectronModule,
     FormsModule,
     ReactiveFormsModule,
-    ColorPickerModule
+    ColorPickerModule,
+    SortablejsModule.forRoot({ animation: 150 }),
   ],
   providers: [ButtonService, TabService, SharedService, SettingsService, WindowsService],
   bootstrap: [AppComponent]

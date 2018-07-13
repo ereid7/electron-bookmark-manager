@@ -100,18 +100,4 @@ export class HotkeyComponent implements OnInit, OnChanges {
         this.selectedButton = site;
         this.buttonService.editmodal = !this.buttonService.editmodal;
     }
-
-    // onDelete() {
-    //     this.buttonService.editmodal = !this.buttonService.editmodal;
-
-    //     this.buttonUpdateForm.reset();
-
-    //     for (let i = 0; i < this.sites.length; i++) {
-    //         if (this.sites[i].id === this.selectedButton.id) {
-    //             this.sites.splice(i, 1);
-    //         }
-    //     }
-
-    //     this.buttonService.delete(this.selectedButton, 1);
-    // }
 }
