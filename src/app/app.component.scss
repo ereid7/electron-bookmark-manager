@@ -47,17 +47,17 @@ color: white;
 
 .hotkeyLinkDark {
   color: #adbbc4;
-  margin-left: 45px; 
-  margin-top: 18px;
-  margin-bottom: -6px;
+  margin-left: 58px; 
+  margin-top: 20px;
+  margin-bottom: -8px;
   font-family: metropolis;
 }
 
 .hotkeyLink {
   color: #454545;
-  margin-left: 45px; 
-  margin-top: 18px; 
-  margin-bottom: -6px;
+  margin-left: 58px; 
+  margin-top: 20px; 
+  margin-bottom: -8px;
   font-family: metropolis;
 }
 
@@ -167,6 +167,16 @@ color: white;
 
 .main-container {
   padding-top: 18px;
+}
+
+.nav-link, .nav-link::after, .nav-link::before {
+  -webkit-user-drag: none;
+	//-webkit-app-region: no-drag;
+}
+
+.hotkey, .hotkey::after, .hotkey::before {
+  -webkit-user-drag: none;
+	//-webkit-app-region: no-drag;
 }
 
 // .content-area {

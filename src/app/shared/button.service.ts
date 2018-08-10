@@ -205,9 +205,6 @@ export class ButtonService implements OnChanges {
             tab: tab
         }
         ipcRenderer.send('swap', order);
-
-        //this.sortedList = this.getButtons(this.tabService.currentTab);
-        //this.refresh();
     }
 
     openLink(url: string) {

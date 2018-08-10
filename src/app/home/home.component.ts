@@ -28,13 +28,14 @@ export class HomeComponent implements OnInit, OnChanges {
 
     // https://stackoverflow.com/questions/22678933/run-a-windows-batch-file-from-node-js
 
-    // TODO add option to change border color on each button
-    // add more options for margin space
     // TODO add browser in settings
 
-    // TODO Allow for multiple shortcuts per link
+    // TODO Allow for multiple shortcuts per link?
     // TODO add edit mode help text
-    // ALLOW FOR MULTIPLE CATEGORIES
+    // ALLOW FOR MULTIPLE CATEGORIES?
+    // TODO fix icon
+    
+    // TODO allow for category sorting
 
     // use angular split for custom toolbar size ? possibly
 

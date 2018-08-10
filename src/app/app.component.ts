@@ -69,6 +69,7 @@ export class AppComponent implements OnInit {
 
     this.tabService.changeTab('All'); // TODO change once have all category
     this.currentTab = 'All';
+    this.buttonService.refresh();
   }
 
   changeTab(tab) {

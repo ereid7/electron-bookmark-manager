@@ -51,7 +51,7 @@ function createWindow() {
   win.setResizable(true)
 
   //// uncomment below to open the DevTools.
-  //win.webContents.openDevTools()
+  win.webContents.openDevTools()
 
   // Event when the window is closed.
   win.on('closed', function () {
@@ -150,33 +150,61 @@ ipcMain.on('update-data', function (event, argument) {
     }
 
     oldFile = JSON.parse(data);
+    var oldShortcut;
 
     // TODO fix update, and adding of first button
+    for (let i = 0; i < oldFile.length; i++) {
+      if (oldFile[i].id === argument.id) {
+        oldShortcut = oldFile[i].shortcut;
+      }
+    }
 
-    if (argument.shortcut) {
-      // todo create shared method
-      if (globalShortcut.isRegistered(argument.shortcut)) {
-        globalShortcut.unregister(argument.shortcut);
-        var urlList = []
-        for (let j = 0; j < oldFile.length; j++) {
-          if (oldFile[j].shortcut === argument.shortcut &&
-            oldFile[j].url !== argument.url &&
-            oldFile[j].id !== argument.id) {
-            urlList.push(oldFile[j].url)
+    if (argument.shortcut != oldShortcut) {
+
+      // update old shortcut
+      if (oldShortcut && oldShortcut != null && oldShortcut != '') {
+        if (globalShortcut.isRegistered(oldShortcut)) {
+          globalShortcut.unregister(oldShortcut);
+          var urlList = []
+          for (let j = 0; j < oldFile.length; j++) {
+            if (oldFile[j].shortcut === oldShortcut &&
+              oldFile[j].url !== argument.url) {
+              urlList.push(oldFile[j].url)
+            }
           }
+
+          globalShortcut.register(oldShortcut, () => {
+            for (let k = 0; k < urlList.length; k++) {
+              open(urlList[k], "chrome");
+            }
+          });
         }
-
-        urlList.push(argument.url);
-
-        globalShortcut.register(argument.shortcut, () => {
-          for (let k = 0; k < urlList.length; k++) {
-            open(urlList[k], "chrome");
+      }
+      if (argument.shortcut != null && argument.shortcut != '') {
+        // todo create shared method
+        if (globalShortcut.isRegistered(argument.shortcut)) {
+          globalShortcut.unregister(argument.shortcut);
+          var urlList = []
+          for (let j = 0; j < oldFile.length; j++) {
+            if (oldFile[j].shortcut === argument.shortcut &&
+              oldFile[j].url !== argument.url &&
+              oldFile[j].id !== argument.id) {
+              urlList.push(oldFile[j].url)
+            }
           }
-        });
-      } else {
-        globalShortcut.register(argument.shortcut, () => {
-          open(argument.url, "chrome");
-        });
+
+          urlList.push(argument.url);
+
+          globalShortcut.register(argument.shortcut, () => {
+            for (let k = 0; k < urlList.length; k++) {
+              open(urlList[k], "chrome");
+            }
+          });
+        } else {
+          globalShortcut.register(argument.shortcut, () => {
+            open(argument.url, "chrome");
+          });
+        }
       }
     }
 
@@ -205,36 +233,74 @@ ipcMain.on('update-data', function (event, argument) {
       }
       alert("The file has been succesfully saved");
     });
-  });
 
-  fs.readFile(tabFilePath, function read(err, data) {
-    var oldTabFile = [];
-    oldTabFile = JSON.parse(data);
-
-    for (let i = 0; i < oldTabFile.tabs.length; i++) {
-      if (oldTab !== 'All') {
-        if (oldTabFile.tabs[i].name === oldTab) {
-          oldTabFile.tabs[i].order = oldTabFile.tabs[i].order.filter(id => {
-            return argument.id === id ? false : true;
-          });
+    // tab order management
+    fs.readFile(tabFilePath, function read(err, data) {
+      var oldTabFile = [];
+      oldTabFile = JSON.parse(data);
+  
+      console.log(oldTab);
+  
+      for (let i = 0; i < oldTabFile.tabs.length; i++) {
+        if (oldTab !== 'All') {
+          console.log(oldTabFile.tabs[i].name) // todo remove
+          if (oldTabFile.tabs[i].name === oldTab) {
+            console.log('success');
+            oldTabFile.tabs[i].order = oldTabFile.tabs[i].order.filter((value) => {
+              return argument.id === value ? false: true;
+            });
+          }
+        }
+        if (argument.category !== 'All') {
+          if (oldTabFile.tabs[i].name === argument.category) {
+            oldTabFile.tabs[i].order.push(argument.id);
+          }
         }
       }
-      if (argument.category !== 'All') {
-        if (oldTabFile.tabs[i].name === argument.category) {
-          oldTabFile.tabs[i].order.push(argument.id);
+      oldTabFile = JSON.stringify(oldTabFile);
+  
+      fs.writeFileSync(tabFilePath, oldTabFile, (err) => {
+        if (err) {
+          console.log("An error ocurred updating the file" + err.message);
+          console.log(err);
+          return;
         }
-      }
-    }
-    oldTabFile = JSON.stringify(oldTabFile);
-
-    fs.writeFileSync(tabFilePath, oldTabFile, (err) => {
-      if (err) {
-        console.log("An error ocurred updating the file" + err.message);
-        console.log(err);
-        return;
-      }
-    })
+      })
+    });
   });
+
+  // fs.readFile(tabFilePath, function read(err, data) {
+  //   var oldTabFile = [];
+  //   oldTabFile = JSON.parse(data);
+
+  //   //console.log(oldTab);
+
+  //   for (let i = 0; i < oldTabFile.tabs.length; i++) {
+  //     if (oldTab !== 'All') {
+  //       //console.log(oldTabFile.tabs[i].name) // todo remove
+  //       if (oldTabFile.tabs[i].name === oldTab) {
+  //         //console.log('success');
+  //         oldTabFile.tabs[i].order = oldTabFile.tabs[i].order.filter((value) => {
+  //           return argument.id === value ? true: false;
+  //         });
+  //       }
+  //     }
+  //     if (argument.category !== 'All') {
+  //       if (oldTabFile.tabs[i].name === argument.category) {
+  //         oldTabFile.tabs[i].order.push(argument.id);
+  //       }
+  //     }
+  //   }
+  //   oldTabFile = JSON.stringify(oldTabFile);
+
+  //   fs.writeFileSync(tabFilePath, oldTabFile, (err) => {
+  //     if (err) {
+  //       console.log("An error ocurred updating the file" + err.message);
+  //       console.log(err);
+  //       return;
+  //     }
+  //   })
+  // });
 });
 
 // Delete Button
@@ -255,8 +321,8 @@ ipcMain.on('delete-data', function (event, argument) {
 
     if (argument.shortcut) {
       // todo create shared method
-      globalShortcut.unregister(argument.shortcut);
       if (globalShortcut.isRegistered(argument.shortcut)) {
+        globalShortcut.unregister(argument.shortcut);
         var urlList = []
         for (let j = 0; j < oldFile.length; j++) {
           if (oldFile[j].shortcut === argument.shortcut &&

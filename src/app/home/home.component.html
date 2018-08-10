@@ -1,5 +1,5 @@
 <div style="margin-top: 22px;" [sortablejs]="this.buttonService.sortedList" [sortablejsOptions]="this.options">
-    <button [ngClass]="getClass()" style="width: 135px;" class="btn btn-primary" *ngFor="let site of this.buttonService.sortedList"
+    <button [ngClass]="getClass()" style="width: 130px;" class="btn btn-primary" *ngFor="let site of this.buttonService.sortedList"
         [value]="site" [style.background-color]="site.color" (click)="buttonClick(site)">{{site.name}}</button>
     <!-- <button *ngIf="this.tabService.editMode" class="btn btn-outline btn-sm addbutton" (click)="this.openModal('addbutton')">
         <p style="font-size: 25pt; margin-top: -1px;">+</p>
@@ -7,7 +7,7 @@
 </div>
 <div style="align-content: center; align-items: center; text-align: center; margin-top: 18px;">
     <button *ngIf="this.tabService.editMode" class="btn btn-outline btn-sm addbutton" (click)="this.openModal('addbutton')">
-        <p style="font-size: 25pt; margin-top: 0px; margin-bottom: 1px">+</p>
+        <p style="font-size: 25pt; margin-top: -1px; margin-bottom: 3px">+</p>
     </button>
 </div>
 <!-- Add button modal -->
@@ -35,7 +35,7 @@
                     <label for="empcolor" style="overflow: visible" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm"
                         [class.invalid]="buttonForm.get('color').invalid
                             && (buttonForm.get('color').dirty || buttonForm.get('color').touched)">
-                        <input id="color" style="overflow: visible" type="text" [(colorPicker)]="color" formControlName="color" (colorPickerChange)="buttonForm.get('color').setValue($event)"
+                        <input id="color" style="overflow: visible" type="text" [(colorPicker)]="color" [cpPositionRelativeToArrow]="true" [cpHeight]="'auto'" [cpPosition]="'left'" formControlName="color" (colorPickerChange)="buttonForm.get('color').setValue($event)"
                             size="30" />
                     </label>
                 </div>
