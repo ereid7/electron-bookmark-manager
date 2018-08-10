@@ -29,6 +29,7 @@
     "@types/electron": "^1.6.10",
     "@types/open": "0.0.29",
     "@webcomponents/custom-elements": "^1.1.0",
+    "adm-zip": "^0.4.11",
     "angular-sortablejs": "^2.5.2",
     "bulma": "^0.7.1",
     "core-js": "^2.4.1",
