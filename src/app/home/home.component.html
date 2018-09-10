@@ -35,7 +35,8 @@
                     <label for="empcolor" style="overflow: visible" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm"
                         [class.invalid]="buttonForm.get('color').invalid
                             && (buttonForm.get('color').dirty || buttonForm.get('color').touched)">
-                        <input id="color" style="overflow: visible" type="text" [(colorPicker)]="color" [cpPositionRelativeToArrow]="true" [cpHeight]="'auto'" [cpPosition]="'left'" formControlName="color" (colorPickerChange)="buttonForm.get('color').setValue($event)"
+                        <input required pattern="^#(?:[0-9a-fA-F]{3}){1,2}$" id="color" style="overflow: visible" type="text" [(colorPicker)]="color" [cpPositionRelativeToArrow]="true" [cpHeight]="'auto'"
+                            [cpPosition]="'left'" formControlName="color" (colorPickerChange)="buttonForm.get('color').setValue($event)"
                             size="30" />
                     </label>
                 </div>
@@ -98,7 +99,8 @@
                     <label for="empcolor">Color</label>
                     <label for="empcolor" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('color').invalid
                             && (buttonUpdateForm.get('color').dirty || buttonUpdateForm.get('color').touched)">
-                        <input id="color" type="text" size="30" [(colorPicker)]="color" formControlName="color" (colorPickerChange)="buttonUpdateForm.get('color').setValue($event)"
+                        <input required pattern="^#(?:[0-9a-fA-F]{3}){1,2}$" id="color" type="text" size="30" [cpPositionRelativeToArrow]="true" [cpHeight]="'auto'"
+                        [cpPosition]="'left'" [(colorPicker)]="color" formControlName="color" (colorPickerChange)="buttonUpdateForm.get('color').setValue($event)"
                         />
                     </label>
                 </div>
@@ -129,11 +131,11 @@
                     </label>
                 </div>
 
-                    <div class="modal-footer">
-                            <button type="button" class="btn btn-outline" (click)="this.closeModal('editbutton')">Cancel</button>
-                            <button type="button" style="background-color: #f8435f; float: left;" class="btn btn-outline" (click)="this.onDelete()">Delete</button>
-                            <button class="btn btn-primary" [disabled]="buttonUpdateForm.invalid" (click)="this.onUpdate()">Save Changes</button>
-                        </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" (click)="this.closeModal('editbutton')">Cancel</button>
+                    <button type="button" style="background-color: #f8435f; float: left;" class="btn btn-outline" (click)="this.onDelete()">Delete</button>
+                    <button class="btn btn-primary" [disabled]="buttonUpdateForm.invalid" (click)="this.onUpdate()">Save Changes</button>
+                </div>
             </section>
         </form>
     </div>

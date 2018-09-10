@@ -23,11 +23,11 @@ export class HotkeyComponent implements OnInit, OnChanges {
 
     constructor(public settingsService: SettingsService, public buttonService: ButtonService, private fb: FormBuilder,
                 public tabService: TabService) {
-        this.sites = this.buttonService.getButtons(this.tabService.currentTab);
+        //this.sites = this.buttonService.getButtons(this.tabService.currentTab);
     }
 
     ngOnInit() {
-        this.sites = this.buttonService.getButtons(this.tabService.currentTab);
+        this.sites = this.buttonService.getButtons('All');
         this.buttonUpdateForm = this.fb.group({
             name: ['', Validators.required],
             url: ['', Validators.required],
@@ -36,7 +36,7 @@ export class HotkeyComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges() {
-        this.sites = this.buttonService.getButtons(this.tabService.currentTab);
+        this.sites = this.buttonService.getButtons('All');
     }
 
     // TODO put in shared service
@@ -45,7 +45,6 @@ export class HotkeyComponent implements OnInit, OnChanges {
     }
 
     openEditModal() {
-       // console.log('weiners');
         this.buttonService.editmodal = !this.buttonService.editmodal;
     }
 

@@ -10,6 +10,7 @@ import { ClarityModule } from '@clr/angular';
 import { NgForm, FormControl, FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { SettingsService } from '../shared/settings.service';
 
+
 // import { ElectronService } from 'ngx-electron';
 
 // import * as open from '../../../node_modules/open/lib/open.js'
@@ -19,25 +20,122 @@ declare var remote: any;
 
 declare let open: any;
 
+
+// OK THIS WORKS but simplify with library methods and add real string values
+function hasValid(input: FormControl) {
+    // TODO use this to make validation for hotkey
+    if (input.value === '' || input.value === null || input.value === undefined) {
+        return null;
+    }
+
+    const modifiers = ['command', 'cmd', 'control', 'ctrl', 'commandorcontrol', 
+    'cmdorctrl', 'alt', 'option', 'altgr', 'shift', 'super'];
+    const second = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                    'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8', 'f9', 'f11', 'f12', 'f13', 'f14', 'f15', 'f16', 'f17', 'f18', 'f19', 'f20', 'f21', 'f22', 'f23', 'f24',
+                    '!', '@', '#', '`', '$', '%', '^', "&", '*', '(', ')', '-', '=', '+', '_', '~', '{', '}', '[', ']', '\\', '|', '\'', ';', ':', '"', '<', ',', '>', '.', '?', '/', 'plus', 'space', 'tab',
+                    'backspace', 'delete', 'insert', 'return', 'enter', 'up', 'down', 'left', 'right', 'home', 'end', 'pageup', 'pagedown', 'escape', 'esc', 'volumeup', 'volumedown', 'volumemute', 'medianexttrack', 'mediaprevioustrack',
+                    'mediastop', 'mediaplaypause', 'printscreen'];
+    // if array does not contain a plus or spaces
+    // validate if the strinng matches a valid shortcut 
+    // else if array has one or more pluses but no spaces
+    // validate that first section of string is a valid, and that second buttons are valid
+    // verify that none of the strings are duplicate
+    // return valid
+    // else return null/false
+
+    // TODO update updating of shortcuts
+    const bool = true;
+    const value = input.value.toLowerCase();
+
+    if (!hasSpace(value)) {
+        if (!hasPlus(value)) {
+            // TODO find library method that does this easer
+            for (let string of modifiers) {
+                if (value.toLowerCase() === string) {
+                    return null;
+                }
+            }
+
+            for (let string of second) {
+                if (value.toLowerCase() === string) {
+                    return null;
+                }
+            }
+
+            return { needsValid: true };
+        } else if (hasPlus(value)) {
+            const wordArray = value.toLowerCase().split('+');
+            const validArray = [];
+            for (let word of wordArray) {
+                validArray.push(false);
+            }
+
+            for (let string of modifiers) {
+                if (wordArray[0] === string) {
+                    validArray[0] = true;
+                }
+            }
+
+            for (let i = 1; i < validArray.length; i++) {
+                for (let string of second) {
+                    if (wordArray[i] === string) {
+                        validArray[i] = true;
+                    }
+                }
+            }
+
+            const validNum = validArray.length;
+            let numValid = 0;
+            for (let bool of validArray) {
+                if (bool) {
+                    numValid++;
+                }
+            }
+
+            return validNum === numValid ? null : { needsValid: true };
+
+        }
+    }
+    return { notValid: true };
+}
+
+// TEMP METHOD CAUSE INDEXOF WONT WORK
+function hasPlus(str: string) {
+    for (let char of str) {
+        if (char === '+') {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function hasSpace(str: string) {
+    for (let char of str) {
+        if (char === ' ') {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnChanges {
-
-    // https://stackoverflow.com/questions/22678933/run-a-windows-batch-file-from-node-js
-
     // TODO add browser in settings
 
-    // TODO Allow for multiple shortcuts per link?
     // TODO add edit mode help text
     // ALLOW FOR MULTIPLE CATEGORIES?
-    // TODO fix icon
-    
-    // TODO allow for category sorting
 
-    // use angular split for custom toolbar size ? possibly
+    // TODO fix sleep - ipc update?
+
+    // TODO get rid of weird lines when dragging tabs
+    // TODO get rid of border colors they are ugly'
+    // TODO fix shortcut look, set default tab to all when loading hotkeys
 
     @HostBinding('class') classes = 'homeClass'; // todo remove
 
@@ -70,22 +168,21 @@ export class HomeComponent implements OnInit, OnChanges {
         this.tab = tabService.currentTab;
         this.options = {
             onUpdate: (event: any) => {
-              this.buttonService.changeOrder(this.buttonService.sortedList, this.tabService.currentTab);
+                this.buttonService.changeOrder(this.buttonService.sortedList, this.tabService.currentTab);
             }
-          };
-        //this.sites = this.buttonService.getButtons(this.tabService.currentTab);
+        };
     }
 
     ngOnInit() {
         this.settingsService.changeSettings();
-       // this.sites = this.buttonService.getButtons(this.tabService.currentTab);
+        // this.sites = this.buttonService.getButtons(this.tabService.currentTab);
         this.tab = this.tabService.currentTab;
 
         this.buttonForm = this.fb.group({
             name: ['', [Validators.required, Validators.maxLength(15)]],
             url: ['', Validators.required],
             color: ['', Validators.required],
-            shortcut: [''],
+            shortcut: ['', [hasValid]],
             category: ['']
         });
 
@@ -155,7 +252,7 @@ export class HomeComponent implements OnInit, OnChanges {
         }
 
         if (this.buttonUpdateForm.value.shortcut) {
-            updatedButton.shortcut = this.buttonUpdateForm.value.shortcut
+            updatedButton.shortcut = this.buttonUpdateForm.value.shortcut.toLowerCase()
         }
 
         this.buttonUpdateForm.reset();
@@ -177,7 +274,7 @@ export class HomeComponent implements OnInit, OnChanges {
         }
 
         if (this.buttonForm.value.shortcut) {
-            newButton.shortcut = this.buttonForm.value.shortcut
+            newButton.shortcut = this.buttonForm.value.shortcut;
         }
 
         this.buttonForm.reset();
@@ -198,7 +295,7 @@ export class HomeComponent implements OnInit, OnChanges {
     // }
 
     buttonClick(site) {
-       // console.log(this.buttonService.getSortOrder(this.tabService.currentTab));
+
         if (!this.tabService.editMode) {
             this.openLink(site.url);
         } else {

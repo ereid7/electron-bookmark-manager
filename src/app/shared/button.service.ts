@@ -67,6 +67,14 @@ export class ButtonService implements OnChanges {
         }
     }
 
+    // addSuccess(args) {
+    //     return new Promise(resolve => {
+    //         ipcRenderer.on
+    //     })
+    // }
+
+
+
     add(button: any) {
         ipcRenderer.send('add-data', button);
 
@@ -97,17 +105,14 @@ export class ButtonService implements OnChanges {
     refresh() {
         this.http.get(__dirname.slice(0, -5) + '/src/assets/storage/buttons.json')
             .subscribe(data => {
-                // console.log(data)
                 this.buttonList = data;
                 this.sortedList = this.getButtons(this.tabService.currentTab);
             });
-        //this.router.navigate(['/home']);
     }
 
     refreshTableView() {
         this.http.get(__dirname.slice(0, -5) + '/src/assets/storage/buttons.json')
             .subscribe(data => {
-                //  console.log(data)
                 this.buttonList = data;
             });
         this.router.navigate(['/hotkey']);
@@ -118,7 +123,6 @@ export class ButtonService implements OnChanges {
         this.http.get(__dirname.slice(0, -5) + '/src/assets/storage/tabs.json')
             .subscribe(data => {
 
-                //console.log(data)
                 this.tabList = data;
                 this.allOrder = this.tabList.all;
                 this.tabList = this.tabList.tabs;
@@ -129,7 +133,6 @@ export class ButtonService implements OnChanges {
             for (let tab of this.tabList) {
                 if (tab.name === tabname) {
                     if (tab.order) {
-                        //console.log(tab.order);
                         return tab.order;
                     } else {
                         return [];
@@ -206,7 +209,6 @@ export class ButtonService implements OnChanges {
         }
         ipcRenderer.send('swap', order);
     }
-
     openLink(url: string) {
         open(url, "chrome");
     }

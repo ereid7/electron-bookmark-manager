@@ -1,8 +1,8 @@
 .sidenav {
   margin-left: -18px;
-  margin-right: -50px;
-
-  width: 7vw;
+  margin-right: 0px;
+ // width: 7vw;
+  
 }
 
 .windowsHeader {
@@ -169,15 +169,26 @@ color: white;
   padding-top: 18px;
 }
 
-.nav-link, .nav-link::after, .nav-link::before {
+#allLink, #allLink::after, #allLink::before {
   -webkit-user-drag: none;
 	//-webkit-app-region: no-drag;
 }
 
-.hotkey, .hotkey::after, .hotkey::before {
-  -webkit-user-drag: none;
-	//-webkit-app-region: no-drag;
+.nav-link {
+  border-style: solid;
+  border-color: #8d8d8d;
+  border-width: 1px;
 }
+
+// .nav-link, .nav-link::after, .nav-link::before {
+//   -webkit-user-drag: none;
+// 	//-webkit-app-region: no-drag;
+// }
+
+// .hotkey, .hotkey::after, .hotkey::before {
+//   -webkit-user-drag: none;
+// 	//-webkit-app-region: no-drag;
+// }
 
 // .content-area {
 //   padding-top: 50px;

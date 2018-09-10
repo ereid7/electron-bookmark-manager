@@ -10,12 +10,6 @@ declare var __dirname;
 export class TabService {
 
   tabList: any;
-
-  // ipcRenderer.on('tab-data', function(event, argument) {
-  //   console.log(argument);
-  //   this.tablist = argument;
-  // });
-
   currentTab = 'All';
 
   expanded = true;
@@ -25,7 +19,6 @@ export class TabService {
 
     this.http.get(__dirname.slice(0, -5) + '/src/assets/storage/tabs.json')
       .subscribe(data => {
-       // console.log(data)
         this.tabList = data;
         this.tabList = this.tabList.tabs;
       });
@@ -56,11 +49,6 @@ export class TabService {
   }
 
   public send() {
-    // ipcRenderer.on('tab-data', function(event, argument) {
-    //   ipcRenderer.send('tab-data', 'poop');
-    //   console.log(argument);
-    //   this.tablist = argument;
-    // });
     ipcRenderer.send('tab-data', 'poop');
   }
 
@@ -86,7 +74,6 @@ export class TabService {
 
     this.http.get(__dirname.slice(0, -5) + '/src/assets/storage/tabs.json')
       .subscribe(data => {
-        //console.log(data)
         this.tabList = data;
         this.tabList = this.tabList.tabs;
       });
@@ -107,12 +94,14 @@ export class TabService {
 
     this.http.get(__dirname.slice(0, -5) + '/src/assets/storage/tabs.json')
       .subscribe(data => {
-        //console.log(data)
         this.tabList = data;
         this.tabList = this.tabList.tabs;
       });
     this.router.navigate(['/home']);
+  }
 
+  changeTabOrder(tabList: any) {
+    ipcRenderer.send('swapTabs', tabList);
   }
 
 }

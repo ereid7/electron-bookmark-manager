@@ -45,11 +45,6 @@ export class SettingsService implements OnInit {
     }
 
     ngOnInit() {
-        // this.http.get(__dirname.slice(0, -5) + '/src/assets/storage/settings.json')
-        //     .subscribe(data => {
-        //         console.log(data)
-        //         this.settings = data;
-        //     });
         this.getJSON().subscribe(
             data => this.settings = data);
     }
@@ -69,20 +64,6 @@ export class SettingsService implements OnInit {
         this.getJSON().subscribe(
             data => this.settings = data);
     }
-
-    // TODO put in shared
-    // refresh() {
-    //     this.http.get(__dirname.slice(0, -5) + '/src/assets/storage/settings.json')
-    //         .subscribe(data => {
-    //             console.log(data)
-    //             this.settings = data;
-    //         });
-        // this.router.navigate(['/home']);
-    // }
-
-    // getButtonSize() {
-    //     if (this.settings.buttonSize)
-    // }
 
     // TODO LINE 7796 clarity css
 

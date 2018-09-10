@@ -135,6 +135,7 @@ ipcMain.on('add-data', function (event, argument) {
       }
     })
   });
+  event.sender.send('add-success', 'success')
 });
 
 // update button
@@ -238,14 +239,9 @@ ipcMain.on('update-data', function (event, argument) {
     fs.readFile(tabFilePath, function read(err, data) {
       var oldTabFile = [];
       oldTabFile = JSON.parse(data);
-  
-      console.log(oldTab);
-  
       for (let i = 0; i < oldTabFile.tabs.length; i++) {
         if (oldTab !== 'All') {
-          console.log(oldTabFile.tabs[i].name) // todo remove
           if (oldTabFile.tabs[i].name === oldTab) {
-            console.log('success');
             oldTabFile.tabs[i].order = oldTabFile.tabs[i].order.filter((value) => {
               return argument.id === value ? false: true;
             });
@@ -268,39 +264,6 @@ ipcMain.on('update-data', function (event, argument) {
       })
     });
   });
-
-  // fs.readFile(tabFilePath, function read(err, data) {
-  //   var oldTabFile = [];
-  //   oldTabFile = JSON.parse(data);
-
-  //   //console.log(oldTab);
-
-  //   for (let i = 0; i < oldTabFile.tabs.length; i++) {
-  //     if (oldTab !== 'All') {
-  //       //console.log(oldTabFile.tabs[i].name) // todo remove
-  //       if (oldTabFile.tabs[i].name === oldTab) {
-  //         //console.log('success');
-  //         oldTabFile.tabs[i].order = oldTabFile.tabs[i].order.filter((value) => {
-  //           return argument.id === value ? true: false;
-  //         });
-  //       }
-  //     }
-  //     if (argument.category !== 'All') {
-  //       if (oldTabFile.tabs[i].name === argument.category) {
-  //         oldTabFile.tabs[i].order.push(argument.id);
-  //       }
-  //     }
-  //   }
-  //   oldTabFile = JSON.stringify(oldTabFile);
-
-  //   fs.writeFileSync(tabFilePath, oldTabFile, (err) => {
-  //     if (err) {
-  //       console.log("An error ocurred updating the file" + err.message);
-  //       console.log(err);
-  //       return;
-  //     }
-  //   })
-  // });
 });
 
 // Delete Button
@@ -527,6 +490,46 @@ ipcMain.on('swap', function (event, argument) {
     oldFile = JSON.stringify(oldFile);
 
     fs.writeFileSync(tabFilePath, oldFile, (err) => {
+      if (err) {
+        console.log("An error ocurred updating the file" + err.message);
+        console.log(err);
+        return;
+      }
+
+      alert("The file has been succesfully saved");
+    });
+  });
+});
+
+ipcMain.on('swapTabs', function (event, argument) {
+  fs.readFile(tabFilePath, function read(err, data) {
+
+    // var oldFile = [];
+
+    // if (err) {
+    //   throw err;
+    // }
+
+    const oldFile = JSON.parse(data);
+
+    // if (argument.tab === 'All') {
+    //   oldFile.all = argument.newList;
+    // } else {
+    //   for (let tab of oldFile.tabs) {
+    //     if (tab.name === argument.tab) {
+    //       tab.order = argument.newList;
+    //     }
+    //   }
+    // }
+
+    // oldFile = JSON.stringify(oldFile);
+    const tabFile = {
+      all: oldFile.all,
+      tabs: argument
+    }
+    const newOrder = JSON.stringify(tabFile);
+
+    fs.writeFileSync(tabFilePath, newOrder, (err) => {
       if (err) {
         console.log("An error ocurred updating the file" + err.message);
         console.log(err);

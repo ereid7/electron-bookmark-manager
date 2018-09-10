@@ -39,6 +39,8 @@ export class AppComponent implements OnInit {
   deletemodal: boolean = false;
   settingsModal: boolean = false;
 
+  options;
+
   // theme properties
   backgroundTheme;
   navTheme;
@@ -48,12 +50,17 @@ export class AppComponent implements OnInit {
     buttonSize: ''
   }
 
-
-  //settingsIcon: string = __dirname.slice(0, -5) + '\\src\\assets\\storage\\images\\settings.png'
+  // Default Color for Picker
+  color: string = '#2889e9';
 
   constructor(public tabService: TabService, public buttonService: ButtonService,
     private router: Router, private fb: FormBuilder, public settingsService: SettingsService,
     private sharedService: SharedService) {
+      this.options = {
+        onUpdate: (event: any) => {
+          this.tabService.changeTabOrder(this.tabService.tabList);
+        }
+      };
   }
 
   currentTab = this.tabService.currentTab; // TODO remove?
@@ -121,7 +128,8 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.settingsService.changeSettings();
     this.tabForm = this.fb.group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
+      color: ['', Validators.required]
     });
     this.settingsForm = this.fb.group({
       theme: ['', Validators.required],
@@ -148,7 +156,8 @@ export class AppComponent implements OnInit {
   onSubmit() {
     let newTab = {
       name: this.tabForm.value.name,
-      order: []
+      order: [],
+      color: this.tabForm.value.color
     }
 
     this.tabForm.reset();
