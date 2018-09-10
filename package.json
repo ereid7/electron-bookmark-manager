@@ -36,6 +36,7 @@
     "@webcomponents/custom-elements": "^1.1.0",
     "adm-zip": "^0.4.11",
     "angular-sortablejs": "^2.5.2",
+    "angular4-color-picker": "^1.4.2",
     "bulma": "^0.7.1",
     "core-js": "^2.4.1",
     "electron-router": "^0.4.1",
@@ -61,7 +62,7 @@
     "electron-packager": "^9.1.0",
     "protractor": "~5.1.2",
     "ts-node": "~3.2.0",
-    "typescript": "^2.6.2",
+    "typescript": "^2.9.2",
     "webpack": "^4.7.0"
   }
 }
