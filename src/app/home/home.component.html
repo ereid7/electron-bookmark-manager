@@ -36,7 +36,7 @@
                         [class.invalid]="buttonForm.get('color').invalid
                             && (buttonForm.get('color').dirty || buttonForm.get('color').touched)">
                         <input required pattern="^#(?:[0-9a-fA-F]{3}){1,2}$" id="color" style="overflow: visible" type="text" [(colorPicker)]="color" [cpPositionRelativeToArrow]="true" [cpHeight]="'auto'"
-                            [cpPosition]="'left'" formControlName="color" (colorPickerChange)="buttonForm.get('color').setValue($event)"
+                            [cpPosition]="'left'" [cpOutputFormat]="'hex'" formControlName="color" (colorPickerChange)="buttonForm.get('color').setValue($event)"
                             size="30" />
                     </label>
                 </div>
@@ -100,7 +100,7 @@
                     <label for="empcolor" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="buttonUpdateForm.get('color').invalid
                             && (buttonUpdateForm.get('color').dirty || buttonUpdateForm.get('color').touched)">
                         <input required pattern="^#(?:[0-9a-fA-F]{3}){1,2}$" id="color" type="text" size="30" [cpPositionRelativeToArrow]="true" [cpHeight]="'auto'"
-                        [cpPosition]="'left'" [(colorPicker)]="color" formControlName="color" (colorPickerChange)="buttonUpdateForm.get('color').setValue($event)"
+                        [cpPosition]="'left'" [cpOutputFormat]="'hex'" [(colorPicker)]="color" formControlName="color" (colorPickerChange)="buttonUpdateForm.get('color').setValue($event)"
                         />
                     </label>
                 </div>
