@@ -11,7 +11,6 @@ export class FilterPipe implements PipeTransform {
             if (text === 'all') {
                 return true;
             }
-            console.log('lol');
             return it.category.toLowerCase() === text;
         });
     }

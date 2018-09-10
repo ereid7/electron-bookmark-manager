@@ -97,7 +97,7 @@
                     <label for="empcolor" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="tabForm.get('color').invalid
                                 && (tabForm.get('color').dirty || tabForm.get('color').touched)">
                         <input required pattern="^#(?:[0-9a-fA-F]{3}){1,2}$" id="color" type="text" style="width: 40vw;" [cpPositionRelativeToArrow]="true"
-                            [cpHeight]="'auto'" [cpPosition]="'left'" [(colorPicker)]="color" formControlName="color" (colorPickerChange)="tabForm.get('color').setValue($event)"
+                            [cpHeight]="'auto'" [cpPosition]="'left'" [cpOutputFormat]="'hex'" [(colorPicker)]="color" formControlName="color" (colorPickerChange)="tabForm.get('color').setValue($event)"
                         />
                     </label>
                 </div>
