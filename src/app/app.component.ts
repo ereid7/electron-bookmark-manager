@@ -11,9 +11,7 @@ import { ButtonService } from './shared/button.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClarityModule } from '@clr/angular';
 import { SettingsService } from './shared/settings.service';
-import { WindowsService } from './shared/windows.service';
 import { HotkeyComponent } from './hotkey/hotkey.component';
-import { SharedService } from './shared/shared.service';
 
 declare var ipcRenderer: any;
 
@@ -47,20 +45,32 @@ export class AppComponent implements OnInit {
 
   settings = {
     theme: 0,
-    buttonSize: ''
+    buttonSize: '',
+    linkBrowser: ''
   }
 
   // Default Color for Picker
   color: string = '#2889e9';
 
   constructor(public tabService: TabService, public buttonService: ButtonService,
-    private router: Router, private fb: FormBuilder, public settingsService: SettingsService,
-    private sharedService: SharedService) {
+    private router: Router, private fb: FormBuilder, public settingsService: SettingsService) {
       this.options = {
         onUpdate: (event: any) => {
           this.tabService.changeTabOrder(this.tabService.tabList);
         }
       };
+  }
+
+  ngOnInit() {
+    this.settingsService.changeSettings();
+    this.tabForm = this.fb.group({
+      name: ['', Validators.required]
+    });
+    this.settingsForm = this.fb.group({
+      theme: ['', Validators.required],
+      buttonSize: ['', Validators.required],
+      linkBrowser: ['', Validators.required]
+    });
   }
 
   currentTab = this.tabService.currentTab; // TODO remove?
@@ -84,8 +94,6 @@ export class AppComponent implements OnInit {
     this.currentTab = tab;
 
     this.buttonService.refresh();
-    // if statement if in options path
-    // this.router.navigate(['/home', tab])
   }
 
   editHotkeys() {
@@ -113,7 +121,8 @@ export class AppComponent implements OnInit {
     this.settingsModal = !this.settingsModal;
     this.settingsForm.setValue({
       theme: this.settingsService.settings.theme,
-      buttonSize: this.settingsService.settings.buttonSize
+      buttonSize: this.settingsService.settings.buttonSize,
+      linkBrowser: this.settingsService.settings.browser
     });
   }
 
@@ -125,46 +134,31 @@ export class AppComponent implements OnInit {
     return this.tabList;
   }
 
-  ngOnInit() {
-    this.settingsService.changeSettings();
-    this.tabForm = this.fb.group({
-      name: ['', Validators.required],
-      color: ['', Validators.required]
-    });
-    this.settingsForm = this.fb.group({
-      theme: ['', Validators.required],
-      buttonSize: ['', Validators.required],
-    });
-  }
-
   onSubmitSettings() {
     this.settingsModal = !this.settingsModal;
 
     let settingsChange = {
       theme: this.settingsForm.value.theme,
-      buttonSize: this.settingsForm.value.buttonSize
+      buttonSize: this.settingsForm.value.buttonSize,
+      browser: this.settingsForm.value.linkBrowser
     }
 
     this.settingsForm.reset();
 
     this.settingsService.updateSettings(settingsChange);
     this.settingsService.changeSettings();
-    // this.settingsService.getJSON().subscribe(
-    //   data => this.settings = data);
   }
 
   onSubmit() {
     let newTab = {
       name: this.tabForm.value.name,
-      order: [],
-      color: this.tabForm.value.color
+      order: []
     }
 
     this.tabForm.reset();
 
     this.tabService.add(newTab);
     this.changeTab(newTab.name);
-    //this.tabService.currentTab = newTab.name;
     this.currentTab = newTab.name;
   }
 }

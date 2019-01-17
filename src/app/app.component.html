@@ -58,19 +58,19 @@
                     All
                 </a>
                 <section [sortablejs]="this.tabService.tabList" [sortablejsOptions]="this.options" class="sidenav-content" style="margin-right: -200px; margin-top: -2px; margin-bottom: 5px;">
-                    <a *ngFor="let tab of this.tabService.tabList;" [style.border-color]="tab.color" [ngClass]="isActive(tab.name)" (click)="changeTab(tab.name)"
+                    <a *ngFor="let tab of this.tabService.tabList;" [ngClass]="isActive(tab.name)" (click)="changeTab(tab.name)"
                         class="nav-link" [routerLink]="['/home']" [ngStyle]="{'color': this.settingsService?.getTextColor(tab.name)}" style="margin-right: -50px;">
-                        <span class="badge badge-danger" *ngIf="this.tabService.editMode" style="color: white; margin-top: 1px; margin-bottom: 3px;"
+                        <span class="badge badge-danger" *ngIf="this.tabService.editMode" style="color: white; margin-top: 1px; margin-bottom: 3px; cursor: pointer;"
                             (click)="this.openDeleteModal()">X</span>
                         {{tab.name}}
                     </a>
                 </section>
-                <a *ngIf="this.tabService.editMode" class="nav-link" style="border: #8d8d8d; border-style:solid; border-width: 1px; margin-top: -330px;"
+                <a *ngIf="this.tabService.editMode" class="nav-link" style="border: #8d8d8d; border-style:solid; border-width: 1px; margin-top: -330px; cursor: pointer;"
                     (click)="this.openModal()">
-                    <p style="font-size: 25pt; margin-top: 1px;">+</p>
+                    <p style="font-size: 25pt; margin-top: 1px; cursor: pointer;">+</p>
                 </a>
                 <div class="windowsFooter" *ngIf="this.tabService.editMode" [ngStyle]="{'background-color': this.settingsService?.getHeaderTheme()}">
-                    <a class="hotkey" [ngClass]="this.settingsService.getEditHotkeyClass()" [routerLink]="['/hotkey']">
+                    <a class="hotkey" style="cursor: pointer;" [ngClass]="this.settingsService.getEditHotkeyClass()" [routerLink]="['/hotkey']">
                         Shortcuts
                     </a>
                 </div>
@@ -90,15 +90,6 @@
                     <label for="empname" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="tabForm.get('name').invalid
                             && (tabForm.get('name').dirty || tabForm.get('name').touched)">
                         <input id="name" type="text" style="width: 40vw;" formControlName="name">
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label for="empcolor">Border Color</label>
-                    <label for="empcolor" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm" [class.invalid]="tabForm.get('color').invalid
-                                && (tabForm.get('color').dirty || tabForm.get('color').touched)">
-                        <input required pattern="^#(?:[0-9a-fA-F]{3}){1,2}$" id="color" type="text" style="width: 40vw;" [cpPositionRelativeToArrow]="true"
-                            [cpHeight]="'auto'" [cpPosition]="'left'" [cpOutputFormat]="'hex'" [(colorPicker)]="color" formControlName="color" (colorPickerChange)="tabForm.get('color').setValue($event)"
-                        />
                     </label>
                 </div>
                 <div class="modal-footer">
@@ -147,12 +138,18 @@
                         </div>
                     </label>
                 </div>
+                <div class="form-group">
+                    <label for="empbuttonSize">Browser</label>
+                    <label for="empbuttonSize" aria-haspopup="false" role="tooltip" class="tooltip tooltip-validation tooltip-sm">
+                        <div>
+                            <select style="width: 254px;" formControlName="linkBrowser">
+                                <option value="chrome">Chrome</option>
+                                <option value="firefox">Firefox</option>
+                            </select>
+                        </div>
+                    </label>
+                </div>
                 <button type="button" class="btn btn-outline btn-sm" (click)="this.editHotkeys()">Edit Hotkeys</button>
-
-                <!-- <div class="modal-footer">
-                <button class="btn btn-primary"
-                    type="submit"
-                    [disabled]="settingsForm.invalid">Add</button></div> -->
             </section>
         </form>
     </div>

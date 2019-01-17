@@ -24,13 +24,6 @@ export class TabService {
       });
   }
 
-  // ngOnChanges() {
-  //   this.sites = this.buttons.getButtons();
-  //   this.tab = this.tabService.currentTab;
-
-  //   this.currentTab = 
-  // }
-
   openNav() {
     this.expanded = !this.expanded;
   }
@@ -78,8 +71,6 @@ export class TabService {
         this.tabList = this.tabList.tabs;
       });
     this.changeTab(tab);
-
-    //this.router.navigate(['/home']);
   }
 
   delete() {

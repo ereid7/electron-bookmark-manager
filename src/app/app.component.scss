@@ -1,8 +1,6 @@
 .sidenav {
   margin-left: -18px;
   margin-right: 0px;
- // width: 7vw;
-  
 }
 
 .windowsHeader {
@@ -156,9 +154,6 @@ color: white;
 .darkModeText {
   color: white;
   text-decoration-color: white;
-  // flood-color: aqua;
-  // background-color: aqua;
-  // lighting-color: aqua;
 }
 
 ::-webkit-scrollbar {
@@ -171,26 +166,11 @@ color: white;
 
 #allLink, #allLink::after, #allLink::before {
   -webkit-user-drag: none;
-	//-webkit-app-region: no-drag;
 }
 
 .nav-link {
-  border-style: solid;
+  border-style: none;
   border-color: #8d8d8d;
   border-width: 1px;
+  cursor: pointer;
 }
-
-// .nav-link, .nav-link::after, .nav-link::before {
-//   -webkit-user-drag: none;
-// 	//-webkit-app-region: no-drag;
-// }
-
-// .hotkey, .hotkey::after, .hotkey::before {
-//   -webkit-user-drag: none;
-// 	//-webkit-app-region: no-drag;
-// }
-
-// .content-area {
-//   padding-top: 50px;
-//   margin-top: 50px;
-// }

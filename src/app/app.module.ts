@@ -6,10 +6,8 @@ import { AppComponent } from './app.component';
 import { ButtonService } from './shared/button.service';
 
 import { TabService } from './shared/tab.service';
-import { SharedService } from './shared/shared.service';
 import { SettingsService } from './shared/settings.service';
 
-import { FilterPipe } from './home/filter.pipe';
 import { ClarityModule } from '@clr/angular';
 import { HomeComponent } from './home/home.component';
 
@@ -22,7 +20,6 @@ import { SortablejsModule } from 'angular-sortablejs';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyComponent } from './hotkey/hotkey.component';
-import { WindowsService } from './shared/windows.service';
 
 const appRoutes: Routes = [
   {
@@ -40,42 +37,23 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     HomeComponent,   
-    FilterPipe, 
     HotkeyComponent
   ],
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
     ),
     BrowserModule, 
     BrowserAnimationsModule,
-    FormsModule, // <-- here
     ClarityModule.forRoot(),
     HttpClientModule,
     NgxElectronModule,
     FormsModule,
     ReactiveFormsModule,
     ColorPickerModule,
-    SortablejsModule.forRoot({ animation: 150 }),
+    SortablejsModule.forRoot({ animation: 500 }),
   ],
-  providers: [ButtonService, TabService, SharedService, SettingsService, WindowsService],
+  providers: [ButtonService, TabService, SettingsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-// TODO make service with all links and side tabs will filter
-// add routing - DONE but still need filter
-
-// TODO make pages launch in chrome
-// TODO remove any electron related files - not needed
-
-// TODO - MAKE PW MANAGER WITH LOCK
-
-// disable / change main toolbar
-// music player
-// tools tab possibly?
-// recolor app
-
-// iss video feed
-// simple game build in?

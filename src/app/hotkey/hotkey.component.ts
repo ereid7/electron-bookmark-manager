@@ -1,8 +1,9 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { SettingsService } from '../shared/settings.service';
 import { ButtonService } from '../shared/button.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { TabService } from '../shared/tab.service';
+
+import { SettingsService, hasSpace, hasPlus, hasValid } from '../shared/settings.service';
 
 @Component({
     selector: 'app-hotkey',
@@ -10,8 +11,6 @@ import { TabService } from '../shared/tab.service';
     styleUrls: ['./hotkey.component.scss']
 })
 export class HotkeyComponent implements OnInit, OnChanges {
-
-    // TODO make abstract class for this component and home component
 
     color: string = '#2889e9';
 
@@ -22,26 +21,19 @@ export class HotkeyComponent implements OnInit, OnChanges {
     sites: any;
 
     constructor(public settingsService: SettingsService, public buttonService: ButtonService, private fb: FormBuilder,
-                public tabService: TabService) {
-        //this.sites = this.buttonService.getButtons(this.tabService.currentTab);
-    }
+                public tabService: TabService) {}
 
     ngOnInit() {
         this.sites = this.buttonService.getButtons('All');
         this.buttonUpdateForm = this.fb.group({
             name: ['', Validators.required],
             url: ['', Validators.required],
-            shortcut: [''],
+            shortcut: ['', [hasValid]],
         });
     }
 
     ngOnChanges() {
         this.sites = this.buttonService.getButtons('All');
-    }
-
-    // TODO put in shared service
-    truncate(url: string) {
-        return url.length > 20 ? url.substring(0, 20) + '...' : url
     }
 
     openEditModal() {
@@ -87,7 +79,6 @@ export class HotkeyComponent implements OnInit, OnChanges {
         this.buttonUpdateForm.reset();
 
         this.buttonService.update(updatedButton, 1);
-        // this.sites = this.buttonService.buttonList;
     }
 
     buttonClick(site) {
@@ -98,5 +89,9 @@ export class HotkeyComponent implements OnInit, OnChanges {
         });
         this.selectedButton = site;
         this.buttonService.editmodal = !this.buttonService.editmodal;
+    }
+
+    truncate(url: string) {
+        return url.length > 20 ? url.substring(0, 20) + '...' : url
     }
 }

@@ -1,1 +1,82 @@
-[]
+[
+    {
+        "category": "Finance",
+        "color": "#b167dd",
+        "id": "64e42774-2bdc-f284-7d65-a2cdf5089b5a",
+        "name": "Yahoo",
+        "shortcut": null,
+        "url": "yahoo.com"
+    },
+    {
+        "category": "Finance",
+        "color": "#57b0ff",
+        "id": "5aff84c1-33d4-758b-df8a-c00ed3dd5c3c",
+        "name": "US Bank",
+        "shortcut": "alt+f",
+        "url": "usbank.com"
+    },
+    {
+        "category": "Finance",
+        "color": "#006bc9",
+        "id": "c43644a5-6ea4-c4d4-0693-306db2e1412e",
+        "name": "Bloomberg",
+        "shortcut": "alt+f",
+        "url": "bloomberg.com"
+    },
+    {
+        "category": "Finance",
+        "color": "#3cbb9b",
+        "id": "dde9c8ee-a804-c53f-6b33-6e9c0f97e5ce",
+        "name": "Mint",
+        "shortcut": "alt+f",
+        "url": "mint.com"
+    },
+    {
+        "category": "Dev",
+        "color": "#d36fd1",
+        "id": "826ead06-3a2a-9dec-ed92-e579384bfdb0",
+        "name": "Heroku",
+        "shortcut": null,
+        "url": "heroku.com"
+    },
+    {
+        "category": "Dev",
+        "color": "#ee6773",
+        "id": "9dc03a86-359b-5ca8-1c4b-22a23ac1ba53",
+        "name": "Scotch.io",
+        "shortcut": "alt+d",
+        "url": "scotch.io"
+    },
+    {
+        "category": "Dev",
+        "color": "#5e7286",
+        "id": "e37597f1-5519-4a32-3218-2f92c8245732",
+        "name": "GitHub",
+        "shortcut": null,
+        "url": "github.com"
+    },
+    {
+        "category": "School",
+        "color": "#7aaea9",
+        "id": "d23fbb4c-f4cc-2d97-3a48-fd49269e3f70",
+        "name": "WebWork",
+        "shortcut": null,
+        "url": "webwork.com/stout"
+    },
+    {
+        "category": "School",
+        "color": "#90c957",
+        "id": "0207164f-5607-cbef-a964-293485928726",
+        "name": "Grades",
+        "shortcut": null,
+        "url": "grades.com"
+    },
+    {
+        "category": "Work",
+        "color": "#d3553b",
+        "id": "cc244f5f-1ddc-9999-2239-a4e50b4de6a9",
+        "name": "Email",
+        "shortcut": "ctrl+alt+m",
+        "url": "gmail.com"
+    }
+]

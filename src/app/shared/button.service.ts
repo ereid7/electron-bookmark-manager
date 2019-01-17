@@ -17,18 +17,6 @@ declare var __dirname;
 
 @Injectable()
 export class ButtonService implements OnChanges {
-    // private _ipc: IpcRenderer | undefined = void 0;
-
-    // this.buttonOrder = this.getSortOrder(tab);
-    // this.sortedList = [];
-    // for (let button of this.buttonOrder) {
-    //     for (let but of this.buttonList) {
-    //         if (button === but.id) {
-    //             this.sortedList.push(but);
-    //         }
-    //     }
-    // }
-    // return this.sortedList;
 
     buttonList: any = [];
     sortedList: any = [];
@@ -66,14 +54,6 @@ export class ButtonService implements OnChanges {
             }
         }
     }
-
-    // addSuccess(args) {
-    //     return new Promise(resolve => {
-    //         ipcRenderer.on
-    //     })
-    // }
-
-
 
     add(button: any) {
         ipcRenderer.send('add-data', button);
@@ -145,7 +125,6 @@ export class ButtonService implements OnChanges {
 
     getButtons(tab: string) {
         // fix some shitg here
-        // let order: any[] = this.getSortOrder(tab); // figure out
         let order = this.getSortOrder(tab);
         let sortedList = [];
         let buttons;
@@ -208,12 +187,5 @@ export class ButtonService implements OnChanges {
             tab: tab
         }
         ipcRenderer.send('swap', order);
-    }
-    openLink(url: string) {
-        open(url, "chrome");
-    }
-
-    openHelpLink() {
-        open('https://electronjs.org/docs/api/accelerator#available-modifiers', "chrome");
     }
 }

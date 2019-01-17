@@ -1,13 +1,10 @@
 <div style="margin-top: 22px;" [sortablejs]="this.buttonService.sortedList" [sortablejsOptions]="this.options">
     <button [ngClass]="getClass()" style="width: 130px;" class="btn btn-primary" *ngFor="let site of this.buttonService.sortedList"
         [value]="site" [style.background-color]="site.color" (click)="buttonClick(site)">{{site.name}}</button>
-    <!-- <button *ngIf="this.tabService.editMode" class="btn btn-outline btn-sm addbutton" (click)="this.openModal('addbutton')">
-        <p style="font-size: 25pt; margin-top: -1px;">+</p>
-    </button> -->
 </div>
 <div style="align-content: center; align-items: center; text-align: center; margin-top: 18px;">
     <button *ngIf="this.tabService.editMode" class="btn btn-outline btn-sm addbutton" (click)="this.openModal('addbutton')">
-        <p style="font-size: 25pt; margin-top: -1px; margin-bottom: 3px">+</p>
+        <p style="font-size: 25pt; margin-top: -1px; margin-bottom: 3px; cursor: pointer;">+</p>
     </button>
 </div>
 <!-- Add button modal -->
@@ -43,7 +40,7 @@
                 <div class="form-group">
                     <label for="empshortcut">Keyboard Shortcut
                         <svg xmlns="http://www.w3.org/2000/svg" class="helpLink" width="20" height="20" viewBox="0 0 24 24" style="margin: -5px; margin-left: 8px;"
-                            (click)="this.buttonService.openHelpLink()">
+                            (click)="this.settingsService.openHelpLink()">
                             <path d="M0 0h24v24H0z" fill="none" />
                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
                         </svg>
@@ -106,8 +103,8 @@
                 </div>
                 <div class="form-group">
                     <label for="empshortcut">Keyboard Shortcut
-                        <svg xmlns="http://www.w3.org/2000/svg" class="helpLink" width="20" height="20" viewBox="0 0 24 24" style="margin: -5px; margin-left: 8px;"
-                            (click)="this.buttonService.openHelpLink()">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="helpLink" width="20" height="20" viewBox="0 0 24 24" style="margin: -5px; margin-left: 8px; cursor: pointer;"
+                            (click)="this.settingsService.openHelpLink()">
                             <path d="M0 0h24v24H0z" fill="none" />
                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
                         </svg>
@@ -127,7 +124,6 @@
                                 <option *ngFor="let tab of this.tabService.tabList" [selected]="isSelected(tab.name)">{{tab.name}}</option>
                             </select>
                         </div>
-                        <!-- <input id="name" type="text" formControlName="category" size="30"> -->
                     </label>
                 </div>
 

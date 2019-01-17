@@ -17,3 +17,6 @@ npm install
 npm run electron-build
 ```
 
+to package app
+
+electron-packager . testapp2 --platform=win32 --icon=src/assets/logo2.icns
