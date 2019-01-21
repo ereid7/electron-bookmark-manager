@@ -26,7 +26,7 @@ In the applications directory:
 
 <br>
 
-<img src='new_pic_6.jpg' width="500px">
+<img src='new_pic_6.png' width="500px">
 <img src='new_pic_4.jpg' width="500px">
 <img src='new_pic_1.jpg' width="500px">
 <img src='new_pic_3.jpg' width="500px">
