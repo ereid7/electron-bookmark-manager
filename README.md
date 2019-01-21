@@ -26,8 +26,8 @@ In the applications directory:
 
 <br>
 
-<img src='appPics/new_pic_2.jpg' width="500px">
-<img src='appPics/new_pic_4.jpg' width="500px">
-<img src='appPics/new_pic_1.jpg' width="500px">
-<img src='appPics/new_pic_3.jpg' width="500px">
-<img src='appPics/new_pic_5.jpg' width="500px">
+<img src='new_pic_2.jpg' width="500px">
+<img src='new_pic_4.jpg' width="500px">
+<img src='new_pic_1.jpg' width="500px">
+<img src='new_pic_3.jpg' width="500px">
+<img src='new_pic_5.jpg' width="500px">
