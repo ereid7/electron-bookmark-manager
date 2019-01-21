@@ -3,16 +3,12 @@ import { Component, OnInit, OnChanges, NgZone, Output, Input, HostListener, Even
 import { Router } from '@angular/router';
 import { ButtonService } from '../shared/button.service';
 import { TabService } from '../shared/tab.service';
-// import { FilterPipe } from './filter.pipe';
-
-// import { ClarityModule } from '@clr/angular';
 
 import { NgForm, FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { SettingsService, hasSpace, hasPlus, hasValid } from '../shared/settings.service';
 
 declare var ipcRenderer: any;
 declare var remote: any;
-declare let open: any;
 
 @Component({
     selector: 'app-home',

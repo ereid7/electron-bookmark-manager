@@ -1,6 +1,5 @@
-import { Component, OnInit, OnChanges, AfterViewInit, AfterContentInit, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/takeWhile';
@@ -9,11 +8,9 @@ import { TabService } from './shared/tab.service';
 import { HomeComponent } from './home/home.component';
 import { ButtonService } from './shared/button.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ClarityModule } from '@clr/angular';
 import { SettingsService } from './shared/settings.service';
 import { HotkeyComponent } from './hotkey/hotkey.component';
 
-declare var ipcRenderer: any;
 
 @Component({
   selector: 'app-root',

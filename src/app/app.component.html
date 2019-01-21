@@ -113,6 +113,7 @@
     </div>
 </clr-modal>
 
+<!-- Settings -->
 <clr-modal [(clrModalOpen)]="this.settingsModal" [clrModalSize]="'lg'">
     <h3 class="modal-title" style="text-align: center">Settings</h3>
     <div class="modal-body" style="text-align: center">
@@ -149,6 +150,7 @@
                         </div>
                     </label>
                 </div>
+                <p style="margin-top: -12px">Browser changes will require a restart to take effect</p>
                 <button type="button" class="btn btn-outline btn-sm" (click)="this.editHotkeys()">Edit Hotkeys</button>
             </section>
         </form>

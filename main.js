@@ -1,12 +1,10 @@
 'use strict';
 
-const { app, BrowserWindow, ipcMain, IpcMessageEvent, ipcRenderer, globalShortcut } = require('electron');
-
-const path = require('path');
+const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron');
 
 const fs = require('fs');
 
-var open = require("open");
+var opn = require("opn");
 
 // normalize shortcuts for each os
 const normalize = require("electron-shortcut-normalizer")
@@ -49,8 +47,8 @@ function createWindow() {
 
   win.setResizable(true)
 
-  //// uncomment below to open the DevTools.
-  //win.webContents.openDevTools()
+  // uncomment below to open the DevTools.
+  // win.webContents.openDevTools()
 
   // Event when the window is closed.
   win.on('closed', function () {
@@ -83,11 +81,11 @@ app.on('ready', function () {
     for (let i = 0; i < oldFile.length; i++) {
       if (oldFile[i].shortcut) {
         globalShortcut.register(oldFile[i].shortcut, () => {
-          open(oldFile[i].url, openBrowser);
+          opn(oldFile[i].url, {app: openBrowser});
           for (let j = 0; j < oldFile.length; j++) {
             if (oldFile[j].shortcut === oldFile[i].shortcut &&
               oldFile[j].url !== oldFile[i].url) {
-              open(oldFile[j].url, openBrowser);
+              opn(oldFile[j].url, {app: openBrowser});
             }
           }
         });
@@ -125,6 +123,10 @@ ipcMain.on('maximize', function () {
   win.isMaximized() ? win.unmaximize() : win.maximize();
 });
 
+ipcMain.on('open-link', function(event, argument) {
+  opn(argument, {app: openBrowser});
+});
+
 // BUTTON LOGIC ---------------------------------------------------------------------------------------------
 
 // add button
@@ -158,7 +160,7 @@ ipcMain.on('add-data', function (event, argument) {
       if (argument.shortcut) {
         globalShortcut.register(argument.shortcut, () => {
           for (let k = 0; k < urlList.length; k++) {
-            open(urlList[k], openBrowser);
+            opn(urlList[k], {app: openBrowser});
           }
         });
       }
@@ -243,7 +245,7 @@ ipcMain.on('update-data', function (event, argument) {
 
           globalShortcut.register(oldShortcut, () => {
             for (let k = 0; k < urlList.length; k++) {
-              open(urlList[k], openBrowser);
+              opn(urlList[k], {app: openBrowser});
             }
           });
         }
@@ -265,12 +267,12 @@ ipcMain.on('update-data', function (event, argument) {
 
           globalShortcut.register(argument.shortcut, () => {
             for (let k = 0; k < urlList.length; k++) {
-              open(urlList[k], openBrowser);
+              opn(urlList[k], {app: openBrowser});
             }
           });
         } else {
           globalShortcut.register(argument.shortcut, () => {
-            open(argument.url, openBrowser);
+            opn(argument.url, {app: openBrowser});
           });
         }
       }
@@ -361,7 +363,7 @@ ipcMain.on('delete-data', function (event, argument) {
 
         globalShortcut.register(argument.shortcut, () => {
           for (let k = 0; k < urlList.length; k++) {
-            open(urlList[k], openBrowser);
+            opn(urlList[k], {app: openBrowser});
           }
         });
       }

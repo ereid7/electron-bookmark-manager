@@ -1,22 +1,33 @@
-# AngularElectron
+# Basic Bookmark Manager
 
-Build a native desktop Angular Bookmark Manager App
+A desktop application built with [Angular](https://angular.io/), [Electron js](https://electronjs.org/), and [Clarity by VMware](https://github.com/vmware/clarity). Made for people who want quick access to their favorite links stored locally with the ability to create global shortcuts to launch their favorite sites. 
 
-- Angular v4.2
-- Electron v1.7
-- Angular CLI v1.4 
+## Features
+- Customizable, sortable categories
+- Customizable bookmark names and colors
+- Sortable button layout for bookmarks
+- Global shortcuts to launch a website/websites
+- Table view for viewing all bookmarks
+- Settings for Light/Dark theme, button size, and browser
 
-## Basic Usage
+# Installation
 
-```shell
-git clone
-cd angular-electron
-npm install
+I have not created a signed installer because this application was mainly for practice and personal use. However you can download the packaged electron application with Windows executable [here](https://mega.nz/#!TrRVyAAL!IipjWUBKZNDtZpRJcjZ0O9i18fHizf_HmuAWa0EDAuQ) or package the app yourself as seen the below.
 
-# build the app
-npm run electron-build
-```
+## Run using npm
+In the applications directory:
+- Run ```npm install```
+- Run ```npm build --prod```
+- Run ```electron .```
 
-to package app
+## Package the app using [electron-packager](https://github.com/electron-userland/electron-packager)
+- Windows: ```electron-packager . application-name --platform=win32```
+- Mac: ```electron-packager . application-name --platform=darwin```
 
-electron-packager . testapp2 --platform=win32 --icon=src/assets/logo2.icns
+<br>
+
+<img src='appPics/new_pic_2.jpg' width="500px">
+<img src='appPics/new_pic_4.jpg' width="500px">
+<img src='appPics/new_pic_1.jpg' width="500px">
+<img src='appPics/new_pic_3.jpg' width="500px">
+<img src='appPics/new_pic_5.jpg' width="500px">

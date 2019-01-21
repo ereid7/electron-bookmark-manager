@@ -1,4 +1,4 @@
-import { Injectable, OnInit, OnChanges } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { TabService } from './tab.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -34,7 +34,6 @@ export function hasValid(input: FormControl) {
     // return valid
     // else return null/false
 
-    const bool = true;
     const value = input.value.toLowerCase();
 
     if (!hasSpace(value)) {
@@ -129,11 +128,11 @@ export class SettingsService implements OnInit {
     }
 
     openLink(url: string) {
-        open(url, this.settings.browser);
+        ipcRenderer.send('open-link', url);
     }
 
     openHelpLink() {
-        open('https://electronjs.org/docs/api/accelerator#available-modifiers', this.settings.browser);
+        ipcRenderer.send('open-link', 'https://electronjs.org/docs/api/accelerator#available-modifiers')
     }
 
     changeSettings() {

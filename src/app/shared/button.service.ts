@@ -2,14 +2,7 @@ import { Injectable, NgZone, OnInit, OnChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ElectronService } from 'ngx-electron';
 import { Router } from '@angular/router';
-import { IfObservable } from 'rxjs/observable/IfObservable';
-import { Observable } from 'rxjs/Observable';
 import { TabService } from './tab.service';
-// import { IpcRenderer } from 'electron';
-
-declare let open: any;
-
-declare var electron: any;
 
 declare var ipcRenderer: any;
 
@@ -31,14 +24,12 @@ export class ButtonService implements OnChanges {
         private _ngZone: NgZone, private router: Router, private tabService: TabService) {
 
         this.refresh();
-        // this.sortOrder = this.getSortOrder(this.tabService.currentTab);
     }
 
     ngOnChanges() {
         this.refresh();
     }
 
-    // TODO put this and openlink in seperate service
     guidGenerator() {
         var S4 = function () {
             return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);

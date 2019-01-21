@@ -1,9 +1,8 @@
-import { Injectable, NgZone, OnChanges } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 declare var ipcRenderer: any;
-declare var remote: any;
 declare var __dirname;
 
 @Injectable()
@@ -15,7 +14,7 @@ export class TabService {
   expanded = true;
   editMode = false;
 
-  constructor(zone: NgZone, private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router) {
 
     this.http.get(__dirname.slice(0, -5) + '/src/assets/storage/tabs.json')
       .subscribe(data => {

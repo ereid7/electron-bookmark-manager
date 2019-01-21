@@ -26,8 +26,7 @@
             ],
             "scripts": [
               "node_modules/electron-router/router.js",
-              "node_modules/@webcomponents/custom-elements/custom-elements.min.js",
-              "node_modules/open/lib/open.js"
+              "node_modules/@webcomponents/custom-elements/custom-elements.min.js"
             ]
           },
           "configurations": {
