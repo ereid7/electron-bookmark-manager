@@ -26,8 +26,4 @@ In the applications directory:
 
 <br>
 
-![ScreenShot](appPics/new_pic_2.jpg)
-![ScreenShot](appPics/new_pic_1.jpg)
-![ScreenShot](appPics/new_pic_3.jpg)
-![ScreenShot](appPics/new_pic_4.jpg)
-![ScreenShot](appPics/new_pic_5.jpg)
+![ScreenShot](appPics/new_pic_6.png)
