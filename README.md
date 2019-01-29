@@ -12,18 +12,22 @@ A desktop application built with [Angular](https://angular.io/), [Electron js](h
 
 # Installation
 
-I have not created a signed installer because this application was mainly for practice and personal use. However you can download the packaged electron application with Windows executable [here](https://mega.nz/#!TrRVyAAL!IipjWUBKZNDtZpRJcjZ0O9i18fHizf_HmuAWa0EDAuQ) or package the app yourself as seen the below.
+I have not created a signed installer because this application was mainly for practice and personal use. However you can download the packaged electron application with Windows executable [here](https://mega.nz/#!264A3YQD!vuXpdLHXAXYhaSWw6jpNxrdzw8iUg69Nz2TMJlGdPZE) or package the app yourself as seen the below.
 
 ## Run using npm
 In the applications directory:
 - Run ```npm install```
-- Run ```npm build --prod```
+- Run ```ng build --prod```
 - Run ```electron .```
 
 ## Package the app using [electron-packager](https://github.com/electron-userland/electron-packager)
-- Windows: ```electron-packager . application-name --platform=win32```
-- Mac: ```electron-packager . application-name --platform=darwin```
+- Windows: ```electron-packager . application-name --platform=win32 --icon=src/assets/logo2.ico```
+- Mac: ```electron-packager . application-name --platform=darwin --icon=src/assets/logo2.ico```
 
 <br>
 
-![ScreenShot](appPics/new_pic_6.png)
+![](appPics/new_pic_2.JPG)
+![](appPics/new_pic_3.JPG)
+![](appPics/new_pic_4.JPG)
+![](appPics/new_pic_1.JPG)
+![](appPics/new_pic_5.JPG)
